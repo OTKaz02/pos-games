@@ -148,7 +148,7 @@
             <div style="width: 100px; height: 100px; background: radial-gradient(circle, #ff0000 0%, #000 70%); border-radius: 50%; margin: 0 auto; border: 3px solid #ff003c; box-shadow: 0 0 15px #ff003c;"></div>
         </div>
         <h1>POS GAMES</h1>
-        <p>Сайт инди-разработчика | Все данные загружаются из Steam</p>
+        <p>Сайт инди-разработчика | Официальные проекты</p>
     </header>
 
     <div class="container">
@@ -157,24 +157,26 @@
         <div class="games-grid">
             
             <!-- ИГРА 1: Forgive Me My Love -->
-            <div class="game-card" id="steam-game-3916410">
-                <img class="game-image-steam" id="img-3916410" src="" alt="Загрузка баннера...">
+            <div class="game-card">
+                <!-- Прямая ссылка на официальный баннер игры из Стима -->
+                <img class="game-image-steam" src="https://steamstatic.com" alt="Forgive Me My Love">
                 <div class="game-info">
-                    <h3 id="title-3916410">Загрузка...</h3>
-                    <p id="desc-3916410">Подключаемся к Steam...</p>
-                    <div class="game-price" id="price-3916410">Загрузка цены...</div>
-                    <a href="https://store.steampowered.com/app/3916410/" target="_blank" class="btn">Открыть в Steam</a>
+                    <h3>Forgive Me My Love</h3>
+                    <p>Атмосферный психологический хоррор от первого лица. Исследуйте пугающе изменчивый дом, разгадайте тайну сокрушительного чувства вины и справьтесь с необъяснимыми событиями, от которых стынет кровь.</p>
+                    <div class="game-price">Доступно в Steam</div>
+                    <a href="https://steampowered.com" target="_blank" class="btn">Открыть в Steam</a>
                 </div>
             </div>
 
             <!-- ИГРА 2: 771 -->
-            <div class="game-card" id="steam-game-3916440">
-                <img class="game-image-steam" id="img-3916440" src="" alt="Загрузка баннера...">
+            <div class="game-card">
+                <!-- Ставим стильную временную хоррор-заглушку, пока игра полируется -->
+                <div style="height: 180px; background: linear-gradient(45deg, #2b0000, #050505); display:flex; align-items:center; justify-content:center; color:#ff003c; font-weight:bold; font-size: 2rem; border-bottom: 2px solid #ff003c; letter-spacing: 5px;">771</div>
                 <div class="game-info">
-                    <h3 id="title-3916440">Загрузка...</h3>
-                    <p id="desc-3916440">Подключаемся к Steam...</p>
-                    <div class="game-price" id="price-3916440">Загрузка статуса...</div>
-                    <a href="https://store.steampowered.com/app/3916440/" target="_blank" class="btn" style="background-color: #2b7711;">Скачать Demo / Предзаказ</a>
+                    <h3>771</h3>
+                    <p>Уникальный инди-хоррор и безумный эксперимент, созданный командой из 7 разработчиков. Каждый автор работал над проектом ровно по 1 дню, не зная планов предыдущего! Скачайте демо-версию прямо сейчас.</p>
+                    <div class="game-price">Запланировано: 14 сент. 2026 г.</div>
+                    <a href="https://steampowered.com" target="_blank" class="btn" style="background-color: #2b7711;">Скачать Demo / В список желаемого</a>
                 </div>
             </div>
 
@@ -182,56 +184,12 @@
     </div>
 
     <footer>
-        <p>© 2026 POS Games. Данные обновляются автоматически.</p>
+        <p>© 2026 POS Games. Все права защищены.</p>
         <p>
             <a href="https://youtube.com" target="_blank">YouTube Канал</a> | 
             <a href="https://t.me" target="_blank">Telegram</a>
         </p>
     </footer>
-
-    <!-- УЛУЧШЕННЫЙ РОБОТ ДЛЯ СТИМА (ОБСЛУЖИВАЕТ ДВЕ ИГРЫ) -->
-    <script>
-        // Массив с ID игр твоего друга
-        const appIds = ['3916410', '3916440'];
-
-        appIds.forEach(appId => {
-            // Берем данные через прокси-сервер, чтобы Стим не ругался на браузер
-            const url = `https://allorigins.win{encodeURIComponent('https://steampowered.com' + appId + '&l=russian')}`;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(body => {
-                    const steamData = JSON.parse(body.contents);
-                    
-                    if (steamData[appId] && steamData[appId].success) {
-                        const game = steamData[appId].data;
-
-                        // Находим нужные места в HTML и заполняем данными из Стима
-                        document.getElementById(`title-${appId}`).innerText = game.name;
-                        document.getElementById(`desc-${appId}`).innerText = game.short_description;
-                        document.getElementById(`img-${appId}`).src = game.header_image;
-                        
-                        // Рассчитываем цену или статус выхода
-                        if (game.is_free) {
-                            document.getElementById(`price-${appId}`).innerText = 'Бесплатно';
-                        } else if (game.price_overview) {
-                            document.getElementById(`price-${appId}`).innerText = `Цена: ${game.price_overview.final_formatted}`;
-                        } else if (game.release_date && game.release_date.coming_soon) {
-                            document.getElementById(`price-${appId}`).innerText = `Скоро выйдет! Дата: ${game.release_date.date}`;
-                        } else {
-                            document.getElementById(`price-${appId}`).innerText = 'Доступно в Steam';
-                        }
-                    } else {
-                        document.getElementById(`desc-${appId}`).innerText = 'Не удалось загрузить данные игры с этого региона.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Ошибка:', error);
-                    document.getElementById(`desc-${appId}`).innerText = 'Стим временно не ответил, но кнопка ниже переведет на игру!';
-                    document.getElementById(`img-${appId}`).src = 'https://steamstatic.com';
-                });
-        });
-    </script>
 
 </body>
 </html>
