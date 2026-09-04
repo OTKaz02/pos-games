@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Games | Официальный сайт инди-разработчика</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #e5e5e5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #141414;
+            border-bottom: 2px solid #8b0000;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 10px 0 5px 0;
+            color: #ff003c;
+            letter-spacing: 2px;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 0;
+            color: #888;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #fff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .game-card {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff003c;
+            box-shadow: 0 5px 15px rgba(255, 0, 60, 0.2);
+        }
+
+        .game-image-steam {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 2px solid #ff003c;
+            background: #222;
+        }
+
+        .game-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .game-info h3 {
+            margin: 0 0 10px 0;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .game-info p {
+            color: #aaa;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .game-price {
+            font-size: 1.1rem;
+            color: #ffef78;
+            font-weight: bold;
+            margin-top: auto;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: block;
+            background-color: #ff003c;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.2s;
+            text-align: center;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #b3002a;
+        }
+
+        footer {
+            background-color: #141414;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 1px solid #222;
+        }
+
+        footer a {
+            color: #ff003c;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div style="width: 100px; height: 100px; background: radial-gradient(circle, #ff0000 0%, #000 70%); border-radius: 50%; margin: 0 auto; border: 3px solid #ff003c; box-shadow: 0 0 15px #ff003c;"></div>
+        </div>
+        <h1>POS GAMES</h1>
+        <p>Сайт инди-разработчика | Все данные загружаются из Steam</p>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Игры в Steam</h2>
+        
+        <div class="games-grid">
+            
+            <!-- ИГРА 1: Forgive Me My Love -->
+            <div class="game-card" id="steam-game-3916410">
+                <img class="game-image-steam" id="img-3916410" src="" alt="Загрузка баннера...">
+                <div class="game-info">
+                    <h3 id="title-3916410">Загрузка...</h3>
+                    <p id="desc-3916410">Подключаемся к Steam...</p>
+                    <div class="game-price" id="price-3916410">Загрузка цены...</div>
+                    <a href="https://store.steampowered.com/app/3916410/" target="_blank" class="btn">Открыть в Steam</a>
+                </div>
+            </div>
+
+            <!-- ИГРА 2: 771 -->
+            <div class="game-card" id="steam-game-3916440">
+                <img class="game-image-steam" id="img-3916440" src="" alt="Загрузка баннера...">
+                <div class="game-info">
+                    <h3 id="title-3916440">Загрузка...</h3>
+                    <p id="desc-3916440">Подключаемся к Steam...</p>
+                    <div class="game-price" id="price-3916440">Загрузка статуса...</div>
+                    <a href="https://store.steampowered.com/app/3916440/" target="_blank" class="btn" style="background-color: #2b7711;">Скачать Demo / Предзаказ</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 POS Games. Данные обновляются автоматически.</p>
+        <p>
+            <a href="https://youtube.com" target="_blank">YouTube Канал</a> | 
+            <a href="https://t.me" target="_blank">Telegram</a>
+        </p>
+    </footer>
+
+    <!-- УЛУЧШЕННЫЙ РОБОТ ДЛЯ СТИМА (ОБСЛУЖИВАЕТ ДВЕ ИГРЫ) -->
+    <script>
+        // Массив с ID игр твоего друга
+        const appIds = ['3916410', '3916440'];
+
+        appIds.forEach(appId => {
+            // Берем данные через прокси-сервер, чтобы Стим не ругался на браузер
+            const url = `https://allorigins.win{encodeURIComponent('https://steampowered.com' + appId + '&l=russian')}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(body => {
+                    const steamData = JSON.parse(body.contents);
+                    
+                    if (steamData[appId] && steamData[appId].success) {
+                        const game = steamData[appId].data;
+
+                        // Находим нужные места в HTML и заполняем данными из Стима
+                        document.getElementById(`title-${appId}`).innerText = game.name;
+                        document.getElementById(`desc-${appId}`).innerText = game.short_description;
+                        document.getElementById(`img-${appId}`).src = game.header_image;
+                        
+                        // Рассчитываем цену или статус выхода
+                        if (game.is_free) {
+                            document.getElementById(`price-${appId}`).innerText = 'Бесплатно';
+                        } else if (game.price_overview) {
+                            document.getElementById(`price-${appId}`).innerText = `Цена: ${game.price_overview.final_formatted}`;
+                        } else if (game.release_date && game.release_date.coming_soon) {
+                            document.getElementById(`price-${appId}`).innerText = `Скоро выйдет! Дата: ${game.release_date.date}`;
+                        } else {
+                            document.getElementById(`price-${appId}`).innerText = 'Доступно в Steam';
+                        }
+                    } else {
+                        document.getElementById(`desc-${appId}`).innerText = 'Не удалось загрузить данные игры с этого региона.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    document.getElementById(`desc-${appId}`).innerText = 'Стим временно не ответил, но кнопка ниже переведет на игру!';
+                    document.getElementById(`img-${appId}`).src = 'https://steamstatic.com';
+                });
+        });
+    </script>
+
+</body>
+</html>
