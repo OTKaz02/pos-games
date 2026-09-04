@@ -1,32 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>POS Games — Psychological Horror Studio</title>
+    <title>POS Games — Рома Посейдон 38</title>
 
-    <!-- Google Fonts: Montserrat for headings, Inter for body -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Tailwind CSS via CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com">
     </script>
 
     <style>
-        /* ===== CSS Variables ===== */
+        /* ========== CSS VARIABLES ========== */
         :root {
             --bg-primary: #0d0d0e;
-            --bg-secondary: #141416;
-            --bg-card: #1a1a1d;
-            --bg-card-hover: #1f1f23;
+            --bg-secondary: #111113;
+            --bg-card: #141416;
+            --bg-card-hover: #1a1a1d;
+            --bg-elevated: #1c1c20;
             --accent: #ff1a1a;
+            --accent-hover: #ff3333;
             --accent-glow: rgba(255, 26, 26, 0.45);
             --accent-dim: rgba(255, 26, 26, 0.18);
+            --accent-soft: rgba(255, 26, 26, 0.07);
             --accent-amber: #e8a13a;
             --border-color: rgba(255, 26, 26, 0.22);
             --border-thick: rgba(255, 26, 26, 0.4);
+            --border-hover: rgba(255, 26, 26, 0.55);
             --text-primary: #f0f0f0;
             --text-secondary: #b0b0b5;
             --text-muted: #6e6e75;
@@ -34,10 +38,12 @@
             --font-body: 'Inter', sans-serif;
             --card-radius: 14px;
             --btn-radius: 10px;
-            --transition-smooth: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 -2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-card-hover: 0 8px 40px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 26, 26, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 -2px 8px rgba(0, 0, 0, 0.35);
         }
 
-        /* ===== Reset & Base ===== */
+        /* ========== RESET & BASE ========== */
         *,
         *::before,
         *::after {
@@ -62,7 +68,7 @@
             min-height: 100vh;
         }
 
-        /* ===== Noise Overlay ===== */
+        /* ========== NOISE OVERLAY ========== */
         .noise-overlay {
             position: fixed;
             top: 0;
@@ -71,13 +77,13 @@
             height: 100%;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.035;
+            opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             background-repeat: repeat;
             background-size: 256px 256px;
         }
 
-        /* ===== Vignette Effect ===== */
+        /* ========== VIGNETTE OVERLAY ========== */
         .vignette-overlay {
             position: fixed;
             top: 0;
@@ -89,48 +95,35 @@
             background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
         }
 
-        /* ===== Typography ===== */
+        /* ========== TYPOGRAPHY ========== */
         .font-heading {
             font-family: var(--font-heading);
         }
-
         h1,
         h2,
         h3,
-        h4,
-        h5,
-        h6 {
+        h4 {
             font-family: var(--font-heading);
             font-weight: 800;
             letter-spacing: -0.02em;
             line-height: 1.15;
         }
 
-        /* ===== Horror Neon Text Effect ===== */
         .horror-neon {
             color: var(--text-primary);
-            text-shadow:
-                0 0 20px var(--accent-glow),
-                0 0 60px rgba(255, 26, 26, 0.25),
-                0 0 100px rgba(255, 26, 26, 0.1);
-            transition: text-shadow var(--transition-smooth);
+            text-shadow: 0 0 20px var(--accent-glow), 0 0 60px rgba(255, 26, 26, 0.25), 0 0 100px rgba(255, 26, 26, 0.1);
+            transition: text-shadow var(--transition);
         }
-
         .horror-neon:hover {
-            text-shadow:
-                0 0 30px var(--accent-glow),
-                0 0 80px rgba(255, 26, 26, 0.35),
-                0 0 140px rgba(255, 26, 26, 0.2);
+            text-shadow: 0 0 30px var(--accent-glow), 0 0 80px rgba(255, 26, 26, 0.35), 0 0 140px rgba(255, 26, 26, 0.2);
         }
 
-        /* ===== Gradient Text ===== */
         .gradient-text {
             background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 30%, #ff1a1a 70%, #8b0000 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .gradient-text-red {
             background: linear-gradient(135deg, #ff4444 0%, #ff1a1a 40%, #990000 100%);
             -webkit-background-clip: text;
@@ -138,84 +131,302 @@
             background-clip: text;
         }
 
-        /* ===== Navigation ===== */
+        /* ========== NAVIGATION ========== */
         .nav-blur {
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             background: rgba(13, 13, 14, 0.85);
             border-bottom: 1px solid var(--border-color);
-            transition: all var(--transition-smooth);
+            transition: all var(--transition);
         }
-
         .nav-link {
             position: relative;
             font-family: var(--font-heading);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 0.06em;
             text-transform: uppercase;
             color: var(--text-secondary);
-            transition: color var(--transition-smooth), text-shadow var(--transition-smooth);
-            padding: 0.5rem 0.25rem;
+            transition: color var(--transition), text-shadow var(--transition);
+            padding: 0.5rem 0.2rem;
+            cursor: pointer;
+            white-space: nowrap;
         }
-
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -2px;
             left: 50%;
             width: 0;
             height: 2px;
             background: var(--accent);
             border-radius: 2px;
             transform: translateX(-50%);
-            transition: width var(--transition-smooth);
+            transition: width var(--transition);
         }
-
         .nav-link:hover {
             color: #fff;
             text-shadow: 0 0 18px var(--accent-glow);
         }
-
         .nav-link:hover::after {
             width: 100%;
         }
 
-        /* ===== Steam Button ===== */
-        .steam-btn {
+        /* ========== BUTTONS ========== */
+        .btn-steam {
             font-family: var(--font-heading);
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            padding: 0.7rem 1.5rem;
+            padding: 0.65rem 1.4rem;
             border-radius: var(--btn-radius);
             background: var(--accent);
             color: #fff;
             border: 2px solid var(--accent);
             cursor: pointer;
-            transition: all var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
+            transition: all var(--transition);
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
         }
-
-        .steam-btn:hover {
-            background: #ff3333;
-            border-color: #ff3333;
-            box-shadow:
-                0 0 25px var(--accent-glow),
-                0 0 60px rgba(255, 26, 26, 0.25),
-                inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+        .btn-steam:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+            box-shadow: 0 0 25px var(--accent-glow), 0 0 60px rgba(255, 26, 26, 0.25), inset 0 -2px 0 rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
         }
-
-        .steam-btn:active {
+        .btn-steam:active {
             transform: translateY(0);
             box-shadow: 0 0 12px var(--accent-glow);
         }
 
-        /* ===== Hamburger Menu ===== */
+        .btn-primary-red {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--btn-radius);
+            background: var(--accent);
+            color: #fff;
+            border: 2px solid var(--accent);
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .btn-primary-red:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+            box-shadow: 0 0 30px var(--accent-glow), 0 0 70px rgba(255, 26, 26, 0.3), inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+        .btn-primary-red:active {
+            transform: translateY(0);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .btn-outline-red {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--btn-radius);
+            background: transparent;
+            color: #ff5555;
+            border: 2px solid rgba(255, 26, 26, 0.5);
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .btn-outline-red:hover {
+            background: rgba(255, 26, 26, 0.1);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 22px rgba(255, 26, 26, 0.25);
+            transform: translateY(-3px);
+        }
+        .btn-outline-red:active {
+            transform: translateY(0);
+        }
+
+        .btn-amber {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--btn-radius);
+            background: var(--accent-amber);
+            color: #111;
+            border: 2px solid var(--accent-amber);
+            cursor: pointer;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .btn-amber:hover {
+            background: #f0a940;
+            border-color: #f0a940;
+            box-shadow: 0 0 28px rgba(232, 161, 58, 0.4), inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* ========== LANGUAGE SWITCHER ========== */
+        .lang-btn {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 0.04em;
+            padding: 0.4rem 0.65rem;
+            border-radius: 6px;
+            border: 2px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        .lang-btn:hover {
+            border-color: var(--border-thick);
+            color: var(--text-secondary);
+            background: var(--accent-soft);
+        }
+        .lang-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        /* ========== CHUNKY CARD ========== */
+        .chunky-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: var(--card-radius);
+            box-shadow: var(--shadow-card);
+            transition: all var(--transition);
+            overflow: hidden;
+            position: relative;
+        }
+        .chunky-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--card-radius);
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(255, 26, 26, 0.03) 0%, transparent 40%);
+            z-index: 1;
+        }
+        .chunky-card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-6px);
+        }
+
+        /* ========== GAME CARD ========== */
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .game-card .image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #0c0c0e;
+            border-bottom: 2px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .game-card .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease;
+            display: block;
+            opacity: 0.85;
+        }
+        .game-card:hover .image-container img {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        .game-card .image-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(13, 13, 14, 0.9) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .game-card .content-area {
+            padding: 1.6rem 1.8rem 1.8rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 0.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== TAG BADGES ========== */
+        .tag-badge {
+            display: inline-block;
+            font-family: var(--font-heading);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.8rem;
+            border-radius: 50px;
+            background: rgba(255, 26, 26, 0.12);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 26, 26, 0.25);
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        .tag-badge:hover {
+            background: rgba(255, 26, 26, 0.22);
+            border-color: rgba(255, 26, 26, 0.45);
+            color: #ff9999;
+            box-shadow: 0 0 15px rgba(255, 26, 26, 0.2);
+        }
+        .tag-badge.amber {
+            background: rgba(232, 161, 58, 0.12);
+            color: var(--accent-amber);
+            border-color: rgba(232, 161, 58, 0.25);
+        }
+        .tag-badge.amber:hover {
+            background: rgba(232, 161, 58, 0.22);
+            border-color: rgba(232, 161, 58, 0.45);
+            color: #f0c060;
+            box-shadow: 0 0 15px rgba(232, 161, 58, 0.2);
+        }
+
+        /* ========== HAMBURGER ========== */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -226,17 +437,15 @@
             border: none;
             z-index: 100;
         }
-
         .hamburger span {
             display: block;
             width: 26px;
             height: 2.5px;
             background: var(--text-primary);
             border-radius: 4px;
-            transition: all var(--transition-smooth);
+            transition: all var(--transition);
             transform-origin: center;
         }
-
         .hamburger.active span:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
             background: var(--accent);
@@ -250,7 +459,7 @@
             background: var(--accent);
         }
 
-        /* Mobile menu */
+        /* ========== MOBILE MENU ========== */
         .mobile-menu {
             display: none;
             position: fixed;
@@ -265,259 +474,47 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease;
+            padding: 1rem;
         }
-
         .mobile-menu.open {
             opacity: 1;
             pointer-events: all;
         }
-
         .mobile-menu a {
             font-family: var(--font-heading);
             font-weight: 700;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: var(--text-primary);
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            transition: all var(--transition-smooth);
+            letter-spacing: 0.06em;
+            transition: all var(--transition);
         }
-
         .mobile-menu a:hover {
             color: var(--accent);
             text-shadow: 0 0 30px var(--accent-glow);
         }
 
-        /* ===== Chunky Card Style ===== */
-        .chunky-card {
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: var(--card-radius);
-            box-shadow:
-                0 4px 20px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.04),
-                inset 0 -2px 8px rgba(0, 0, 0, 0.3);
-            transition: all var(--transition-smooth);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .chunky-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: var(--card-radius);
-            pointer-events: none;
-            background: linear-gradient(180deg, rgba(255, 26, 26, 0.03) 0%, transparent 40%);
-            z-index: 1;
-        }
-
-        .chunky-card:hover {
-            border-color: var(--border-thick);
-            background: var(--bg-card-hover);
-            box-shadow:
-                0 8px 40px rgba(0, 0, 0, 0.7),
-                0 0 35px var(--accent-dim),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06),
-                inset 0 -2px 8px rgba(0, 0, 0, 0.35);
-            transform: translateY(-6px);
-        }
-
-        /* ===== Game Card Specific ===== */
-        .game-card {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .game-card .image-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            background: #111113;
-            border-bottom: 2px solid var(--border-color);
-            flex-shrink: 0;
-        }
-
-        .game-card .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            display: block;
-            opacity: 0.85;
-        }
-
-        .game-card:hover .image-container img {
-            transform: scale(1.05);
-            opacity: 1;
-        }
-
-        .game-card .image-container::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: linear-gradient(to top, rgba(13, 13, 14, 0.9) 0%, transparent 100%);
-            pointer-events: none;
-        }
-
-        .game-card .content-area {
-            padding: 1.8rem 2rem 2rem;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            gap: 0.9rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* ===== Tag Badges ===== */
-        .tag-badge {
-            display: inline-block;
-            font-family: var(--font-heading);
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 0.35rem 0.85rem;
-            border-radius: 50px;
-            background: rgba(255, 26, 26, 0.12);
-            color: #ff6b6b;
-            border: 1px solid rgba(255, 26, 26, 0.25);
-            transition: all var(--transition-smooth);
-            white-space: nowrap;
-        }
-
-        .tag-badge:hover {
-            background: rgba(255, 26, 26, 0.22);
-            border-color: rgba(255, 26, 26, 0.45);
-            color: #ff9999;
-            box-shadow: 0 0 15px rgba(255, 26, 26, 0.2);
-        }
-
-        .tag-badge.amber {
-            background: rgba(232, 161, 58, 0.12);
-            color: #e8a13a;
-            border-color: rgba(232, 161, 58, 0.25);
-        }
-        .tag-badge.amber:hover {
-            background: rgba(232, 161, 58, 0.22);
-            border-color: rgba(232, 161, 58, 0.45);
-            color: #f0c060;
-            box-shadow: 0 0 15px rgba(232, 161, 58, 0.2);
-        }
-
-        /* ===== Price Badge ===== */
-        .price-badge {
-            font-family: var(--font-heading);
-            font-weight: 800;
-            font-size: 1.4rem;
-            color: #fff;
-            text-shadow: 0 0 20px var(--accent-glow);
-            letter-spacing: 0.02em;
-        }
-
-        /* ===== Action Buttons ===== */
-        .btn-primary-red {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            padding: 0.85rem 2rem;
-            border-radius: var(--btn-radius);
-            background: var(--accent);
-            color: #fff;
-            border: 2px solid var(--accent);
-            cursor: pointer;
-            transition: all var(--transition-smooth);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            white-space: nowrap;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary-red:hover {
-            background: #ff3333;
-            border-color: #ff3333;
-            box-shadow:
-                0 0 30px var(--accent-glow),
-                0 0 70px rgba(255, 26, 26, 0.3),
-                inset 0 -2px 0 rgba(0, 0, 0, 0.3);
-            transform: translateY(-3px);
-        }
-        .btn-primary-red:active {
-            transform: translateY(0);
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-
-        .btn-outline-red {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            padding: 0.85rem 2rem;
-            border-radius: var(--btn-radius);
-            background: transparent;
-            color: #ff5555;
-            border: 2px solid rgba(255, 26, 26, 0.5);
-            cursor: pointer;
-            transition: all var(--transition-smooth);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            white-space: nowrap;
-        }
-
-        .btn-outline-red:hover {
-            background: rgba(255, 26, 26, 0.1);
-            border-color: var(--accent);
-            color: #fff;
-            box-shadow: 0 0 22px rgba(255, 26, 26, 0.25);
-            transform: translateY(-3px);
-        }
-        .btn-outline-red:active {
-            transform: translateY(0);
-        }
-
-        /* ===== Hero Section ===== */
-        .hero-banner-container {
+        /* ========== HERO BANNER ========== */
+        .hero-banner {
             position: relative;
             border-radius: var(--card-radius);
             border: 2px solid var(--border-color);
             overflow: hidden;
-            background: #111113;
-            box-shadow:
-                0 8px 40px rgba(0, 0, 0, 0.6),
-                0 0 50px rgba(255, 26, 26, 0.08);
-            transition: all var(--transition-smooth);
+            background: #0c0c0e;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 50px rgba(255, 26, 26, 0.08);
+            transition: all var(--transition);
             aspect-ratio: 16 / 10;
         }
-
-        .hero-banner-container:hover {
-            border-color: var(--border-thick);
-            box-shadow:
-                0 12px 50px rgba(0, 0, 0, 0.7),
-                0 0 60px rgba(255, 26, 26, 0.15);
+        .hero-banner:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.7), 0 0 60px rgba(255, 26, 26, 0.15);
         }
-
-        .hero-banner-container img {
+        .hero-banner img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -525,35 +522,45 @@
             opacity: 0.8;
             transition: opacity 0.5s ease;
         }
-        .hero-banner-container:hover img {
+        .hero-banner:hover img {
             opacity: 1;
         }
-
-        .hero-banner-container::after {
+        .hero-banner::after {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(135deg, rgba(13, 13, 14, 0.5) 0%, rgba(255, 26, 26, 0.06) 50%, rgba(13, 13, 14, 0.3) 100%);
             pointer-events: none;
         }
+        .hero-banner-fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 2;
+        }
 
-        /* ===== Follower Count Block ===== */
+        /* ========== FOLLOWER BLOCK ========== */
         .follower-block {
             background: var(--bg-card);
             border: 2px solid var(--border-color);
             border-radius: var(--card-radius);
-            padding: 1.2rem 1.8rem;
-            box-shadow:
-                0 4px 16px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.04);
-            transition: all var(--transition-smooth);
+            padding: 1.2rem 1.6rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
         .follower-block:hover {
             border-color: var(--border-thick);
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 26, 26, 0.12);
         }
 
-        /* ===== Footer Social Icons ===== */
+        /* ========== SOCIAL ICONS ========== */
         .social-icon-btn {
             width: 44px;
             height: 44px;
@@ -564,8 +571,9 @@
             align-items: center;
             justify-content: center;
             color: var(--text-secondary);
-            transition: all var(--transition-smooth);
+            transition: all var(--transition);
             cursor: pointer;
+            text-decoration: none;
         }
         .social-icon-btn:hover {
             border-color: var(--accent);
@@ -575,60 +583,14 @@
             background: rgba(255, 26, 26, 0.08);
         }
 
-        /* ===== Section Divider ===== */
+        /* ========== SECTION DIVIDER ========== */
         .section-divider {
             width: 100%;
             height: 1px;
             background: linear-gradient(90deg, transparent 0%, var(--border-color) 25%, var(--border-thick) 50%, var(--border-color) 75%, transparent 100%);
         }
 
-        /* ===== Scrollbar ===== */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2a2a2e;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .desktop-nav-links {
-                display: none !important;
-            }
-            .desktop-steam-btn {
-                display: none !important;
-            }
-            .mobile-menu {
-                display: flex;
-            }
-
-            .hero-banner-container {
-                aspect-ratio: 16 / 11;
-            }
-
-            .game-card .content-area {
-                padding: 1.3rem 1.4rem 1.6rem;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .mobile-menu {
-                display: none !important;
-            }
-        }
-
-        /* ===== Fade-in Animation ===== */
+        /* ========== ANIMATIONS ========== */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -639,7 +601,6 @@
                 transform: translateY(0);
             }
         }
-
         .animate-fade-in-up {
             animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
             opacity: 0;
@@ -657,7 +618,6 @@
             animation-delay: 0.6s;
         }
 
-        /* ===== Glow pulse for accents ===== */
         @keyframes glowPulse {
             0%,
             100% {
@@ -670,26 +630,67 @@
         .glow-pulse {
             animation: glowPulse 3s ease-in-out infinite;
         }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .desktop-nav-links {
+                display: none !important;
+            }
+            .desktop-lang-group {
+                display: none !important;
+            }
+            .desktop-steam-btn {
+                display: none !important;
+            }
+            .mobile-menu {
+                display: flex;
+            }
+            .game-card .content-area {
+                padding: 1.2rem 1.3rem 1.5rem;
+            }
+            .hero-banner {
+                aspect-ratio: 16 / 11;
+            }
+        }
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none !important;
+            }
+        }
     </style>
 </head>
-
 <body>
     <!-- Noise & Vignette Overlays -->
     <div class="noise-overlay" aria-hidden="true"></div>
     <div class="vignette-overlay" aria-hidden="true"></div>
 
     <!-- ==================== NAVIGATION ==================== -->
-    <nav class="nav-blur fixed top-0 left-0 right-0 z-50 py-3 px-4 md:px-8 lg:px-12">
+    <nav class="nav-blur fixed top-0 left-0 right-0 z-50 py-3 px-4 md:px-8 lg:px-10">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <!-- Logo -->
             <a href="#" class="flex items-center gap-3 group flex-shrink-0">
-                <img
-                src="logo.png"
-                alt="POS Games Logo"
-                class="w-10 h-10 md:w-11 md:h-11 rounded-lg border-2 border-[var(--border-color)] object-cover transition-all duration-300 group-hover:border-[var(--accent)] group-hover:shadow-[0_0_20px_var(--accent-dim)]"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                />
-                <span class="font-heading font-900 text-lg md:text-xl tracking-tight horror-neon hidden" style="display:none; font-weight:900;">
+                <img src="logo.png" alt="POS Games Logo"
+                class="w-9 h-9 md:w-11 md:h-11 rounded-lg border-2 border-[var(--border-color)] object-cover transition-all duration-300 group-hover:border-[var(--accent)] group-hover:shadow-[0_0_20px_var(--accent-dim)]"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <span class="font-heading text-lg md:text-xl tracking-tight horror-neon" style="display:none; font-weight:900;">
                     POS GAMES
                 </span>
                 <span class="font-heading text-lg md:text-xl tracking-tight horror-neon" style="font-weight:900;">
@@ -698,23 +699,29 @@
             </a>
 
             <!-- Desktop Nav Links -->
-            <div class="hidden md:flex items-center gap-8 desktop-nav-links">
-                <a href="#games" class="nav-link">Games</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#community" class="nav-link">Community</a>
-                <a href="#contact" class="nav-link">Contact</a>
+            <div class="hidden md:flex items-center gap-6 desktop-nav-links">
+                <a href="#games" class="nav-link" data-i18n="nav.games">Игры</a>
+                <a href="#about" class="nav-link" data-i18n="nav.about">Обо мне</a>
+                <a href="#community" class="nav-link" data-i18n="nav.community">Сообщество</a>
+            </div>
+
+            <!-- Desktop Language Switcher -->
+            <div class="hidden md:flex items-center gap-2 desktop-lang-group">
+                <button class="lang-btn active" data-lang="ru" aria-label="Русский">RU</button>
+                <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                <button class="lang-btn" data-lang="id" aria-label="Bahasa Indonesia">ID</button>
             </div>
 
             <!-- Desktop Steam Button -->
-            <a href="#" class="steam-btn desktop-steam-btn flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1.5 -ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+            <a href="#" class="btn-steam desktop-steam-btn flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M11.966 2.18a9.96 9.96 0 0 0-8.99 5.534h.005l4.914 2.043a1.59 1.59 0 0 1 1.635-.16l7.4-3.465a.17.17 0 0 1 .155.002l1.914 1.1A9.96 9.96 0 0 0 11.966 2.18zM2.972 8.12A9.97 9.97 0 0 0 2.01 12c0 5.523 4.477 10 10 10a9.96 9.96 0 0 0 6.605-2.392l-2.147-1.24a1.46 1.46 0 0 1-.358.203l-2.92-1.365a1.74 1.74 0 0 1-2.28-.928 1.74 1.74 0 0 1 .21-2.043l-2.12-.878A9.96 9.96 0 0 0 2.972 8.12zM9.46 10.597l3.32 1.374a1.66 1.66 0 0 0 .248.1l3.03-1.42-1.55-.896-4.55 1.11a.31.31 0 0 0-.3.24.3.3 0 0 0 .2.343zm.57 2.54a1.22 1.22 0 0 0 1.585-.576 1.22 1.22 0 0 0-2.16-1.152 1.22 1.22 0 0 0 .575 1.728zm8.26 1.67l2.68 1.546A9.96 9.96 0 0 0 22 12c0-1.34-.264-2.618-.743-3.79l-3.018 1.414a1.73 1.73 0 0 1 .05 5.183z"/>
                 </svg>
-                Follow on Steam
+                <span data-i18n="nav.steam">Подписаться в Steam</span>
             </a>
 
             <!-- Hamburger -->
-            <button class="hamburger md:hidden" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <button class="hamburger md:hidden" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -724,83 +731,71 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#games" class="mobile-nav-link">Games</a>
-        <a href="#about" class="mobile-nav-link">About</a>
-        <a href="#community" class="mobile-nav-link">Community</a>
-        <a href="#contact" class="mobile-nav-link">Contact</a>
-        <a href="#" class="steam-btn mt-4" style="font-size:1rem; padding:1rem 2.5rem;">
-            Follow on Steam
+        <a href="#games" class="mobile-nav-link" data-i18n="nav.games">Игры</a>
+        <a href="#about" class="mobile-nav-link" data-i18n="nav.about">Обо мне</a>
+        <a href="#community" class="mobile-nav-link" data-i18n="nav.community">Сообщество</a>
+        <div class="flex items-center gap-2 mt-2" id="mobileLangGroup">
+            <button class="lang-btn active" data-lang-mobile="ru" aria-label="Русский">RU</button>
+            <button class="lang-btn" data-lang-mobile="en" aria-label="English">EN</button>
+            <button class="lang-btn" data-lang-mobile="id" aria-label="Bahasa Indonesia">ID</button>
+        </div>
+        <a href="#" class="btn-steam mt-2" style="font-size:0.9rem; padding:0.8rem 2rem;">
+            <span data-i18n="nav.steam">Подписаться в Steam</span>
         </a>
     </div>
 
     <!-- ==================== HERO SECTION ==================== -->
-    <section class="relative pt-28 md:pt-36 pb-16 md:pb-24 px-4 md:px-8 lg:px-12" id="hero">
+    <section class="relative pt-28 md:pt-36 pb-14 md:pb-20 px-4 md:px-8 lg:px-10" id="hero">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14 items-center">
-                <!-- Left: Text Content -->
-                <div class="space-y-6 md:space-y-7 order-2 lg:order-1">
+                <!-- Left: Text -->
+                <div class="space-y-5 md:space-y-6 order-2 lg:order-1">
                     <div class="animate-fade-in-up">
-                        <p class="inline-block font-heading font-600 text-xs md:text-sm tracking-[0.25em] uppercase text-[#ff4444] border-2 border-[var(--border-color)] rounded-full px-4 py-1.5 mb-5 bg-[rgba(255,26,26,0.06)]">
-                            ⚠ Indie Horror Studio
+                        <p class="inline-block font-heading font-600 text-xs md:text-sm tracking-[0.25em] uppercase text-[#ff4444] border-2 border-[var(--border-color)] rounded-full px-4 py-1.5 mb-4 bg-[rgba(255,26,26,0.06)]">
+                            ⚠ Solo Indie Developer
                         </p>
                     </div>
-
                     <h1 class="animate-fade-in-up delay-1 font-heading font-900 text-5xl md:text-6xl lg:text-7xl leading-none tracking-tight">
                         <span class="gradient-text">POS</span>
                         <span class="gradient-text-red"> GAMES</span>
                     </h1>
-
-                    <p class="animate-fade-in-up delay-2 font-heading font-600 text-xl md:text-2xl text-[#d0d0d5] leading-snug max-w-lg">
-                        We craft psychological first-person horrors that <span class="text-[#ff4444] font-700">warp your reality</span>.
+                    <p class="animate-fade-in-up delay-1 font-heading font-700 text-xl md:text-2xl text-[#e0c0c0] leading-snug">
+                        Рома Посейдон 38
+                    </p>
+                    <p class="animate-fade-in-up delay-2 font-heading font-600 text-lg md:text-xl text-[#d0d0d5] leading-snug max-w-lg" data-i18n="hero.tagline">
+                        Я создаю психологические хорроры от первого лица, которые искажают вашу реальность.
+                    </p>
+                    <p class="animate-fade-in-up delay-3 text-[var(--text-secondary)] text-sm md:text-base leading-relaxed max-w-lg font-light" data-i18n="hero.intro">
+                        Привет, я Рома Посейдон 38 — соло-инди-разработчик POS Games. Я специализируюсь на создании атмосферных приключений, симуляторов, искажающих сознание, и глубоких психологических триллеров полностью самостоятельно, раздвигая границы инди-хоррор сторителлинга.
                     </p>
 
-                    <p class="animate-fade-in-up delay-3 text-[var(--text-secondary)] text-base md:text-lg leading-relaxed max-w-md font-light">
-                        Specializing in indie adventures, simulators, and mind-bending thrillers. Every project is an experiment in fear, atmosphere, and the fragile boundaries of the human psyche.
-                    </p>
-
-                    <div class="animate-fade-in-up delay-3 flex flex-wrap gap-4 pt-2">
-                        <a href="#games" class="btn-primary-red glow-pulse">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
-                            Explore Our Games
-                        </a>
-                        <a href="#about" class="btn-outline-red">
-                            About the Studio
-                        </a>
-                    </div>
-
-                    <!-- Follower Count Block -->
-                    <div class="animate-fade-in-up delay-4 follower-block mt-4 inline-flex items-center gap-4 flex-wrap">
+                    <!-- Follower Count -->
+                    <div class="animate-fade-in-up delay-4 follower-block mt-3">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-[rgba(255,26,26,0.15)] border-2 border-[var(--border-color)] flex items-center justify-center text-xl">
+                            <div class="w-10 h-10 rounded-full bg-[rgba(255,26,26,0.15)] border-2 border-[var(--border-color)] flex items-center justify-center text-xl flex-shrink-0">
                                 👁️
                             </div>
                             <div>
                                 <p class="font-heading font-800 text-2xl leading-none text-white">12,847</p>
-                                <p class="text-xs text-[var(--text-muted)] font-medium tracking-wide">Steam Followers</p>
+                                <p class="text-xs text-[var(--text-muted)] font-medium tracking-wide" data-i18n="hero.followerLabel">Подписчиков в Steam</p>
                             </div>
                         </div>
-                        <span class="w-px h-10 bg-[var(--border-color)]"></span>
+                        <span class="w-px h-10 bg-[var(--border-color)] hidden sm:block"></span>
                         <div>
-                            <p class="font-heading font-700 text-sm text-[#ff6666]">Join our growing community!</p>
-                            <p class="text-xs text-[var(--text-muted)]">New horrors brewing 👁️</p>
+                            <p class="font-heading font-700 text-sm text-[#ff6666]" data-i18n="hero.followerJoin">Присоединяйтесь к моему растущему сообществу в Steam!</p>
+                            <p class="text-xs text-[var(--text-muted)]" data-i18n="hero.followerTagline">Новые кошмары уже близко 👁️</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right: Hero Banner -->
                 <div class="animate-fade-in-up delay-2 order-1 lg:order-2">
-                    <div class="hero-banner-container">
-                        <img
-                        src="hero_banner.png"
-                        alt="POS Games — Featured Horror Banner"
+                    <div class="hero-banner">
+                        <img src="hero_banner.png" alt="POS Games Featured Banner"
                         class="w-full h-full object-cover"
-                        onerror="this.style.opacity='0.15'; this.style.filter='grayscale(80%)';"
-                        />
-                        <!-- Fallback overlay if image missing -->
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(255,26,26,0.1) 0%, rgba(13,13,14,0.7) 100%);">
-                            <span class="font-heading font-900 text-5xl md:text-7xl text-white/20 tracking-widest uppercase select-none">P O S</span>
+                        onerror="this.style.opacity='0.1'; this.style.filter='grayscale(80%)';" />
+                        <div class="hero-banner-fallback">
+                            <span class="font-heading font-900 text-5xl md:text-7xl text-white/10 tracking-widest uppercase select-none" aria-hidden="true">P O S</span>
                         </div>
                     </div>
                 </div>
@@ -808,62 +803,52 @@
         </div>
     </section>
 
-    <!-- Section Divider -->
-    <div class="section-divider my-8 md:my-12"></div>
+    <!-- Divider -->
+    <div class="section-divider my-6 md:my-10"></div>
 
     <!-- ==================== GAMES SHOWCASE ==================== -->
-    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-12" id="games">
+    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-10" id="games">
         <div class="max-w-7xl mx-auto">
-            <!-- Section Header -->
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="font-heading font-900 text-4xl md:text-5xl lg:text-6xl tracking-tight mb-4">
-                    <span class="gradient-text-red">OUR</span> <span class="text-white">GAMES</span>
+                    <span class="gradient-text-red" data-i18n="games.sectionTitle">Мои игры</span>
                 </h2>
-                <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-2xl mx-auto font-light">
-                    Each title is a descent into the unknown. Face your fears.
+                <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-2xl mx-auto font-light" data-i18n="games.sectionSubtitle">
+                    Каждый проект — это погружение в неизведанное. Встретьтесь со своими страхами.
                 </p>
                 <div class="w-24 h-1 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent mx-auto mt-6 rounded-full"></div>
             </div>
 
-            <!-- Games Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
                 <!-- ===== GAME CARD 1: Forgive Me My Love ===== -->
                 <article class="chunky-card game-card animate-fade-in-up">
                     <div class="image-container">
-                        <img
-                        src="game1_banner.png"
-                        alt="Forgive Me My Love — Banner"
-                        onerror="this.style.opacity='0.12'; this.style.filter='grayscale(85%)';"
-                        />
+                        <img src="game1_banner.png" alt="Forgive Me My Love — Banner"
+                        onerror="this.style.opacity='0.08'; this.style.filter='grayscale(85%)';" />
                         <div class="absolute top-4 right-4 z-10">
-                            <span class="tag-badge" style="font-size:0.7rem; padding:0.45rem 1rem;">💰 $3.99</span>
+                            <span class="tag-badge" style="font-size:0.65rem; padding:0.4rem 0.9rem;">💰 $3.99</span>
                         </div>
                     </div>
                     <div class="content-area">
                         <div class="flex flex-wrap gap-2 mb-1">
-                            <span class="tag-badge">Psychological Horror</span>
-                            <span class="tag-badge">First-Person</span>
-                            <span class="tag-badge amber">Story Rich</span>
+                            <span class="tag-badge" data-i18n="game1.tag1">Психологический хоррор</span>
+                            <span class="tag-badge" data-i18n="game1.tag2">От первого лица</span>
+                            <span class="tag-badge amber" data-i18n="game1.tag3">Глубокая история</span>
                         </div>
-
-                        <h3 class="font-heading font-800 text-2xl md:text-3xl text-white leading-tight">
-                            Forgive Me My Love
-                        </h3>
-
-                        <p class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed font-light">
-                            A first-person psychological horror game about the crushing weight of guilt. Live through the aftermath of a devastating tragedy: your wife is dead, and it's your fault. But when her casket is brought home, something inexplicable and terrifying begins to warp your reality...
+                        <h3 class="font-heading font-800 text-2xl md:text-3xl text-white leading-tight">Forgive Me My Love</h3>
+                        <p class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed font-light" data-i18n="game1.desc">
+                            Психологический хоррор от первого лица о разрушительном весе вины. Переживите последствия ужасной трагедии: ваша жена мертва, и это ваша вина. Но когда её гроб приносят домой, что-то необъяснимое и ужасающее начинает искажать вашу реальность...
                         </p>
-
-                        <div class="flex items-center justify-between mt-4 pt-2 border-t border-[var(--border-color)]">
+                        <div class="flex items-center justify-between mt-4 pt-3 border-t border-[var(--border-color)] flex-wrap gap-3">
                             <div class="flex items-center gap-2">
                                 <div class="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></div>
-                                <span class="text-xs text-[var(--text-muted)] font-medium">Available Now</span>
+                                <span class="text-xs text-[var(--text-muted)] font-medium" data-i18n="game1.available">Уже доступно</span>
                             </div>
-                            <a href="#" class="btn-primary-red" style="padding:0.7rem 1.8rem; font-size:0.75rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <a href="#" class="btn-primary-red" style="padding:0.7rem 1.6rem; font-size:0.75rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M11.966 2.18a9.96 9.96 0 0 0-8.99 5.534h.005l4.914 2.043a1.59 1.59 0 0 1 1.635-.16l7.4-3.465a.17.17 0 0 1 .155.002l1.914 1.1A9.96 9.96 0 0 0 11.966 2.18zM2.972 8.12A9.97 9.97 0 0 0 2.01 12c0 5.523 4.477 10 10 10a9.96 9.96 0 0 0 6.605-2.392l-2.147-1.24a1.46 1.46 0 0 1-.358.203l-2.92-1.365a1.74 1.74 0 0 1-2.28-.928 1.74 1.74 0 0 1 .21-2.043l-2.12-.878A9.96 9.96 0 0 0 2.972 8.12zM9.46 10.597l3.32 1.374a1.66 1.66 0 0 0 .248.1l3.03-1.42-1.55-.896-4.55 1.11a.31.31 0 0 0-.3.24.3.3 0 0 0 .2.343zm.57 2.54a1.22 1.22 0 0 0 1.585-.576 1.22 1.22 0 0 0-2.16-1.152 1.22 1.22 0 0 0 .575 1.728zm8.26 1.67l2.68 1.546A9.96 9.96 0 0 0 22 12c0-1.34-.264-2.618-.743-3.79l-3.018 1.414a1.73 1.73 0 0 1 .05 5.183z"/>
                                 </svg>
-                                Buy on Steam
+                                <span data-i18n="game1.buyBtn">Купить в Steam</span>
                             </a>
                         </div>
                     </div>
@@ -872,45 +857,37 @@
                 <!-- ===== GAME CARD 2: 771 ===== -->
                 <article class="chunky-card game-card animate-fade-in-up delay-1">
                     <div class="image-container">
-                        <img
-                        src="game2_banner.png"
-                        alt="771 — Banner"
-                        onerror="this.style.opacity='0.12'; this.style.filter='grayscale(85%)';"
-                        />
+                        <img src="game2_banner.png" alt="771 — Banner"
+                        onerror="this.style.opacity='0.08'; this.style.filter='grayscale(85%)';" />
                         <div class="absolute top-4 right-4 z-10">
-                            <span class="tag-badge amber" style="font-size:0.7rem; padding:0.45rem 1rem;">🎮 Free Demo</span>
+                            <span class="tag-badge amber" style="font-size:0.65rem; padding:0.4rem 0.9rem;">🎮 <span data-i18n="game2.demoBadge">Бесплатное демо</span></span>
                         </div>
                     </div>
                     <div class="content-area">
                         <div class="flex flex-wrap gap-2 mb-1">
-                            <span class="tag-badge">Psychological Horror</span>
-                            <span class="tag-badge">First-Person</span>
-                            <span class="tag-badge amber">Co-op Indie</span>
+                            <span class="tag-badge" data-i18n="game2.tag1">Психологический хоррор</span>
+                            <span class="tag-badge" data-i18n="game2.tag2">От первого лица</span>
+                            <span class="tag-badge amber" data-i18n="game2.tag3">Экспериментальный</span>
                         </div>
-
-                        <h3 class="font-heading font-800 text-2xl md:text-3xl text-white leading-tight">
-                            771
-                        </h3>
-
-                        <p class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed font-light">
-                            An experimental psychological horror experience consisting of <span class="text-white font-medium">7 unique gameplay segments</span>, each carefully crafted by a different indie developer to distort your senses. No two playthroughs are ever the same.
+                        <h3 class="font-heading font-800 text-2xl md:text-3xl text-white leading-tight">771</h3>
+                        <p class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed font-light" data-i18n="game2.desc">
+                            Экспериментальный психологический хоррор, состоящий из 7 уникальных игровых сегментов. Для этого особого проекта я сотрудничал с 6 другими талантливыми инди-разработчиками, каждый из которых создал изолированный кошмарный сегмент, чтобы исказить ваши чувства.
                         </p>
-
-                        <div class="flex items-center justify-between mt-4 pt-2 border-t border-[var(--border-color)] flex-wrap gap-3">
+                        <div class="flex items-center justify-between mt-4 pt-3 border-t border-[var(--border-color)] flex-wrap gap-3">
                             <div class="flex items-center gap-2">
                                 <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
-                                <span class="text-xs text-[var(--text-muted)] font-medium">Demo Available Now</span>
+                                <span class="text-xs text-[var(--text-muted)] font-medium" data-i18n="game2.demoAvailable">Демо доступно сейчас</span>
                             </div>
-                            <div class="flex gap-3 flex-wrap">
-                                <a href="#" class="btn-primary-red" style="padding:0.7rem 1.5rem; font-size:0.75rem; background:#e8a13a; border-color:#e8a13a;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <div class="flex gap-2 flex-wrap">
+                                <a href="#" class="btn-amber" style="padding:0.7rem 1.3rem; font-size:0.72rem;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
-                                    Play Free Demo
+                                    <span data-i18n="game2.demoBtn">Играть бесплатно</span>
                                 </a>
-                                <a href="#" class="btn-outline-red" style="padding:0.7rem 1.5rem; font-size:0.75rem;">
-                                    View on Steam
+                                <a href="#" class="btn-outline-red" style="padding:0.7rem 1.3rem; font-size:0.72rem;">
+                                    <span data-i18n="game2.steamBtn">Смотреть в Steam</span>
                                 </a>
                             </div>
                         </div>
@@ -920,64 +897,51 @@
         </div>
     </section>
 
-    <!-- Section Divider -->
-    <div class="section-divider my-8 md:my-12"></div>
+    <!-- Divider -->
+    <div class="section-divider my-6 md:my-10"></div>
 
-    <!-- ==================== ABOUT & COLLABORATIONS ==================== -->
-    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-12" id="about">
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-10" id="about">
         <div class="max-w-5xl mx-auto">
-            <div class="chunky-card p-8 md:p-12 lg:p-14" style="border-radius:18px;">
+            <div class="chunky-card p-6 md:p-10 lg:p-14" style="border-radius:18px;">
                 <div class="text-center mb-8 md:mb-10">
                     <h2 class="font-heading font-900 text-3xl md:text-4xl lg:text-5xl tracking-tight mb-3">
-                        <span class="text-white">ABOUT</span> <span class="gradient-text-red">POS GAMES</span>
+                        <span class="text-white" data-i18n="about.title">За кулисами</span>
+                        <span class="gradient-text-red ml-2" data-i18n="about.titleAccent">разработки</span>
                     </h2>
                     <div class="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent mx-auto mt-5 rounded-full"></div>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-                    <!-- Column 1 -->
                     <div class="space-y-4">
-                        <div class="w-12 h-12 rounded-xl bg-[rgba(255,26,26,0.1)] border-2 border-[var(--border-color)] flex items-center justify-center text-2xl">
-                            🔮
-                        </div>
-                        <h3 class="font-heading font-700 text-lg md:text-xl text-white">Atmospheric Storytelling</h3>
-                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light">
-                            We build worlds soaked in dread. Every shadow, every silence, every creak of the floor is intentional. Our stories linger long after the screen goes dark.
+                        <div class="w-12 h-12 rounded-xl bg-[rgba(255,26,26,0.1)] border-2 border-[var(--border-color)] flex items-center justify-center text-2xl flex-shrink-0">🎮</div>
+                        <h3 class="font-heading font-700 text-base md:text-lg text-white" data-i18n="about.col1Title">Всё сам</h3>
+                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light" data-i18n="about.col1Text">
+                            От программирования до левел-дизайна, от звукового оформления до сюжета — каждая деталь создана моими руками.
                         </p>
                     </div>
-
-                    <!-- Column 2 -->
                     <div class="space-y-4">
-                        <div class="w-12 h-12 rounded-xl bg-[rgba(232,161,58,0.1)] border-2 border-[rgba(232,161,58,0.25)] flex items-center justify-center text-2xl">
-                            🧩
-                        </div>
-                        <h3 class="font-heading font-700 text-lg md:text-xl text-white">Unique Indie Mechanics</h3>
-                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light">
-                            From shifting realities to fragmented narratives, we experiment with mechanics that challenge how you perceive and interact with the game world.
+                        <div class="w-12 h-12 rounded-xl bg-[rgba(232,161,58,0.1)] border-2 border-[rgba(232,161,58,0.25)] flex items-center justify-center text-2xl flex-shrink-0">🌑</div>
+                        <h3 class="font-heading font-700 text-base md:text-lg text-white" data-i18n="about.col2Title">Атмосфера</h3>
+                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light" data-i18n="about.col2Text">
+                            Каждый шорох, каждая тень, каждый тихий звук продуманы до мелочей, чтобы создать глубокое, тревожное переживание.
                         </p>
                     </div>
-
-                    <!-- Column 3 -->
                     <div class="space-y-4">
-                        <div class="w-12 h-12 rounded-xl bg-[rgba(255,26,26,0.1)] border-2 border-[var(--border-color)] flex items-center justify-center text-2xl">
-                            🤝
-                        </div>
-                        <h3 class="font-heading font-700 text-lg md:text-xl text-white">Creative Collaboration</h3>
-                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light">
-                            We partner with fellow indie developers to push boundaries. Projects like <span class="text-white font-medium">"771"</span> showcase the power of collective horror — 7 developers, 7 segments, one nightmare.
+                        <div class="w-12 h-12 rounded-xl bg-[rgba(255,26,26,0.1)] border-2 border-[var(--border-color)] flex items-center justify-center text-2xl flex-shrink-0">💀</div>
+                        <h3 class="font-heading font-700 text-base md:text-lg text-white" data-i18n="about.col3Title">Инди-дух</h3>
+                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light" data-i18n="about.col3Text">
+                            Каждый проект — это часть моей души, воплощённая в интерактивном кошмаре. Никаких компромиссов, только чистый хоррор.
                         </p>
                     </div>
                 </div>
-
-                <!-- Collaboration Highlight -->
-                <div class="mt-10 p-6 md:p-8 rounded-xl border-2 border-[var(--border-color)] bg-[rgba(255,26,26,0.04)]">
+                <div class="mt-8 p-5 md:p-6 rounded-xl border-2 border-[var(--border-color)] bg-[rgba(255,26,26,0.04)]">
                     <div class="flex items-start gap-4 flex-wrap">
                         <span class="text-3xl flex-shrink-0">👁️</span>
                         <div>
-                            <p class="font-heading font-700 text-base md:text-lg text-white mb-2">The "771" Project — A Collaborative Experiment</p>
-                            <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light">
-                                In 2025, POS Games united 7 indie developers from across the globe to create "771" — an experimental horror anthology where each developer designed one segment with complete creative freedom. The result is a disorienting, genre-defying experience that blurs the line between authorship and nightmare.
+                            <p class="font-heading font-700 text-sm md:text-base text-white mb-2" data-i18n="about.quote">
+                                «Я создаю игры, которые остаются с тобой после того, как экран погас.»
                             </p>
+                            <p class="text-[var(--text-muted)] text-sm" data-i18n="about.quoteAuthor">— Рома Посейдон 38</p>
                         </div>
                     </div>
                 </div>
@@ -985,98 +949,73 @@
         </div>
     </section>
 
-    <!-- Section Divider -->
-    <div class="section-divider my-8 md:my-12"></div>
+    <!-- Divider -->
+    <div class="section-divider my-6 md:my-10"></div>
 
     <!-- ==================== COMMUNITY SECTION ==================== -->
-    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-12" id="community">
+    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-10" id="community">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="font-heading font-900 text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
-                <span class="text-white">JOIN THE</span> <span class="gradient-text-red">COMMUNITY</span>
+                <span class="text-white" data-i18n="community.title">Сообщество</span>
             </h2>
-            <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-2xl mx-auto font-light mb-10">
-                Connect with fellow survivors, share your scariest moments, get early access to demos, and help shape our next nightmare.
+            <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-2xl mx-auto font-light mb-10" data-i18n="community.subtitle">
+                Присоединяйтесь к сообществу выживших, делитесь своими самыми страшными моментами и получайте ранний доступ к демо.
             </p>
-
             <div class="flex flex-wrap justify-center gap-4 md:gap-5">
-                <div class="chunky-card px-6 py-5 flex items-center gap-4" style="border-radius:12px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#ff4444]" fill="currentColor" viewBox="0 0 24 24">
+                <div class="chunky-card px-5 py-4 flex items-center gap-4" style="border-radius:12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-[#ff4444] shrink-0" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M11.966 2.18a9.96 9.96 0 0 0-8.99 5.534h.005l4.914 2.043a1.59 1.59 0 0 1 1.635-.16l7.4-3.465a.17.17 0 0 1 .155.002l1.914 1.1A9.96 9.96 0 0 0 11.966 2.18zM2.972 8.12A9.97 9.97 0 0 0 2.01 12c0 5.523 4.477 10 10 10a9.96 9.96 0 0 0 6.605-2.392l-2.147-1.24a1.46 1.46 0 0 1-.358.203l-2.92-1.365a1.74 1.74 0 0 1-2.28-.928 1.74 1.74 0 0 1 .21-2.043l-2.12-.878A9.96 9.96 0 0 0 2.972 8.12zM9.46 10.597l3.32 1.374a1.66 1.66 0 0 0 .248.1l3.03-1.42-1.55-.896-4.55 1.11a.31.31 0 0 0-.3.24.3.3 0 0 0 .2.343zm.57 2.54a1.22 1.22 0 0 0 1.585-.576 1.22 1.22 0 0 0-2.16-1.152 1.22 1.22 0 0 0 .575 1.728zm8.26 1.67l2.68 1.546A9.96 9.96 0 0 0 22 12c0-1.34-.264-2.618-.743-3.79l-3.018 1.414a1.73 1.73 0 0 1 .05 5.183z"/>
                     </svg>
                     <div class="text-left">
-                        <p class="font-heading font-700 text-white">Steam</p>
-                        <p class="text-xs text-[var(--text-muted)]">Follow us for updates</p>
+                        <p class="font-heading font-700 text-white text-sm" data-i18n="community.steam">Steam</p>
+                        <p class="text-xs text-[var(--text-muted)]" data-i18n="community.steamDesc">Следите за обновлениями</p>
                     </div>
                 </div>
-
-                <div class="chunky-card px-6 py-5 flex items-center gap-4" style="border-radius:12px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#ff4444]" fill="currentColor" viewBox="0 0 24 24">
+                <div class="chunky-card px-5 py-4 flex items-center gap-4" style="border-radius:12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-[#ff4444] shrink-0" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                     </svg>
                     <div class="text-left">
-                        <p class="font-heading font-700 text-white">Twitter / X</p>
-                        <p class="text-xs text-[var(--text-muted)]">Daily dev updates</p>
+                        <p class="font-heading font-700 text-white text-sm" data-i18n="community.twitter">Twitter / X</p>
+                        <p class="text-xs text-[var(--text-muted)]" data-i18n="community.twitterDesc">Ежедневные апдейты</p>
                     </div>
                 </div>
-
-                <div class="chunky-card px-6 py-5 flex items-center gap-4" style="border-radius:12px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#ff4444]" fill="currentColor" viewBox="0 0 24 24">
+                <div class="chunky-card px-5 py-4 flex items-center gap-4" style="border-radius:12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-[#ff4444] shrink-0" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
                     </svg>
                     <div class="text-left">
-                        <p class="font-heading font-700 text-white">Discord</p>
-                        <p class="text-xs text-[var(--text-muted)]">Chat with devs &amp; fans</p>
+                        <p class="font-heading font-700 text-white text-sm" data-i18n="community.discord">Discord</p>
+                        <p class="text-xs text-[var(--text-muted)]" data-i18n="community.discordDesc">Чат с разработчиком</p>
                     </div>
                 </div>
-
-                <div class="chunky-card px-6 py-5 flex items-center gap-4" style="border-radius:12px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#ff4444]" fill="currentColor" viewBox="0 0 24 24">
+                <div class="chunky-card px-5 py-4 flex items-center gap-4" style="border-radius:12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-[#ff4444] shrink-0" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 14.5c-.29.4-.65.68-1.06.83-.41.15-.87.22-1.37.22h-3.5c-.5 0-.96-.07-1.37-.22a2.27 2.27 0 01-1.06-.83c-.28-.4-.42-.87-.42-1.39V8.94c0-.52.14-.98.42-1.39.28-.4.64-.68 1.06-.83.41-.15.87-.22 1.37-.22h3.5c.5 0 .96.07 1.37.22.41.15.78.43 1.06.83.28.41.42.87.42 1.39v6.17c0 .52-.14.99-.42 1.39zm-1.27-5.3l-2.31 1.44c-.41.26-.72.28-1.1.02l-2.31-1.45v3.78c0 .35.13.65.39.89.26.25.57.37.93.37h4.18c.36 0 .67-.12.93-.37.26-.24.39-.54.39-.89V11.2h-1.1z"/>
                     </svg>
                     <div class="text-left">
-                        <p class="font-heading font-700 text-white">VK</p>
-                        <p class="text-xs text-[var(--text-muted)]">Russian community hub</p>
+                        <p class="font-heading font-700 text-white text-sm" data-i18n="community.vk">VK</p>
+                        <p class="text-xs text-[var(--text-muted)]" data-i18n="community.vkDesc">Русскоязычное комьюнити</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section Divider -->
-    <div class="section-divider my-8 md:my-12"></div>
-
-    <!-- ==================== CONTACT SECTION ==================== -->
-    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-12" id="contact">
-        <div class="max-w-3xl mx-auto text-center">
-            <h2 class="font-heading font-900 text-3xl md:text-4xl tracking-tight mb-4">
-                <span class="text-white">CONTACT</span> <span class="gradient-text-red">US</span>
-            </h2>
-            <p class="text-[var(--text-secondary)] text-base md:text-lg font-light mb-8">
-                For press inquiries, collaboration proposals, or just to say hi — drop us a line.
-            </p>
-            <a href="mailto:contact@posgames.com" class="btn-primary-red inline-flex" style="font-size:0.9rem; padding:1rem 2.5rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                contact@posgames.com
-            </a>
-        </div>
-    </section>
+    <!-- Divider -->
+    <div class="section-divider my-6 md:my-10"></div>
 
     <!-- ==================== FOOTER ==================== -->
-    <footer class="border-t-2 border-[var(--border-color)] bg-[#0a0a0b] py-8 md:py-10 px-4 md:px-8 lg:px-12 mt-8" id="footer">
+    <footer class="border-t-2 border-[var(--border-color)] bg-[#0a0a0b] py-8 md:py-10 px-4 md:px-8 lg:px-10" id="footer">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <!-- Logo & Branding -->
+            <!-- Author Block -->
             <div class="flex items-center gap-4">
-                <img
-                src="avatar.png"
-                alt="POS Games Developer Avatar"
+                <img src="avatar.png" alt="Рома Посейдон 38 Avatar"
                 class="w-12 h-12 rounded-full border-2 border-[var(--border-color)] object-cover transition-all duration-300 hover:border-[var(--accent)] hover:shadow-[0_0_20px_var(--accent-dim)]"
-                onerror="this.style.display='none';"
-                />
+                onerror="this.style.display='none';" />
                 <div>
-                    <p class="font-heading font-800 text-base md:text-lg text-white">POS Games</p>
-                    <p class="text-xs text-[var(--text-muted)]">Independent Horror Game Studio</p>
+                    <p class="font-heading font-800 text-base md:text-lg text-white">Рома Посейдон 38</p>
+                    <p class="text-xs text-[var(--text-muted)]">POS Games — Solo Indie Developer</p>
                 </div>
             </div>
 
@@ -1106,26 +1045,315 @@
 
             <!-- Copyright -->
             <div class="text-center md:text-right">
-                <p class="text-sm text-[var(--text-muted)] font-medium">&copy; 2026 POS Games. All rights reserved.</p>
-                <p class="text-xs text-[var(--text-muted)]/70 mt-1">Stay scared. 👁️</p>
+                <p class="text-sm text-[var(--text-muted)] font-medium" data-i18n="footer.copyright">
+                    © 2026 POS Games. Создано вручную Ромой Посейдоном 38. Все права защищены.
+                </p>
+                <p class="text-xs text-[var(--text-muted)]/70 mt-1" data-i18n="footer.tagline">Оставайтесь напуганными. 👁️</p>
             </div>
         </div>
     </footer>
 
-    <!-- ==================== JAVASCRIPT ==================== -->
+    <!-- ==================== JAVASCRIPT: LANGUAGE STATE & INTERACTIONS ==================== -->
     <script>
-        // Hamburger Menu Toggle
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        // ========== TRANSLATIONS ==========
+        const translations = {
+            ru: {
+                // Nav
+                'nav.games': 'Игры',
+                'nav.about': 'Обо мне',
+                'nav.community': 'Сообщество',
+                'nav.steam': 'Подписаться в Steam',
+                // Hero
+                'hero.tagline': 'Я создаю психологические хорроры от первого лица, которые искажают вашу реальность.',
+                'hero.intro': 'Привет, я Рома Посейдон 38 — соло-инди-разработчик POS Games. Я специализируюсь на создании атмосферных приключений, симуляторов, искажающих сознание, и глубоких психологических триллеров полностью самостоятельно, раздвигая границы инди-хоррор сторителлинга.',
+                'hero.followerLabel': 'Подписчиков в Steam',
+                'hero.followerJoin': 'Присоединяйтесь к моему растущему сообществу в Steam!',
+                'hero.followerTagline': 'Новые кошмары уже близко 👁️',
+                // Games section
+                'games.sectionTitle': 'Мои игры',
+                'games.sectionSubtitle': 'Каждый проект — это погружение в неизведанное. Встретьтесь со своими страхами.',
+                // Game 1
+                'game1.tag1': 'Психологический хоррор',
+                'game1.tag2': 'От первого лица',
+                'game1.tag3': 'Глубокая история',
+                'game1.desc': 'Психологический хоррор от первого лица о разрушительном весе вины. Переживите последствия ужасной трагедии: ваша жена мертва, и это ваша вина. Но когда её гроб приносят домой, что-то необъяснимое и ужасающее начинает искажать вашу реальность...',
+                'game1.buyBtn': 'Купить в Steam',
+                'game1.available': 'Уже доступно',
+                // Game 2
+                'game2.tag1': 'Психологический хоррор',
+                'game2.tag2': 'От первого лица',
+                'game2.tag3': 'Экспериментальный',
+                'game2.demoBadge': 'Бесплатное демо',
+                'game2.desc': 'Экспериментальный психологический хоррор, состоящий из 7 уникальных игровых сегментов. Для этого особого проекта я сотрудничал с 6 другими талантливыми инди-разработчиками, каждый из которых создал изолированный кошмарный сегмент, чтобы исказить ваши чувства.',
+                'game2.demoBtn': 'Играть бесплатно',
+                'game2.steamBtn': 'Смотреть в Steam',
+                'game2.demoAvailable': 'Демо доступно сейчас',
+                // About
+                'about.title': 'За кулисами',
+                'about.titleAccent': 'разработки',
+                'about.col1Title': 'Всё сам',
+                'about.col1Text': 'От программирования до левел-дизайна, от звукового оформления до сюжета — каждая деталь создана моими руками.',
+                'about.col2Title': 'Атмосфера',
+                'about.col2Text': 'Каждый шорох, каждая тень, каждый тихий звук продуманы до мелочей, чтобы создать глубокое, тревожное переживание.',
+                'about.col3Title': 'Инди-дух',
+                'about.col3Text': 'Каждый проект — это часть моей души, воплощённая в интерактивном кошмаре. Никаких компромиссов, только чистый хоррор.',
+                'about.quote': '«Я создаю игры, которые остаются с тобой после того, как экран погас.»',
+                'about.quoteAuthor': '— Рома Посейдон 38',
+                // Community
+                'community.title': 'Сообщество',
+                'community.subtitle': 'Присоединяйтесь к сообществу выживших, делитесь своими самыми страшными моментами и получайте ранний доступ к демо.',
+                'community.steam': 'Steam',
+                'community.steamDesc': 'Следите за обновлениями',
+                'community.twitter': 'Twitter / X',
+                'community.twitterDesc': 'Ежедневные апдейты',
+                'community.discord': 'Discord',
+                'community.discordDesc': 'Чат с разработчиком',
+                'community.vk': 'VK',
+                'community.vkDesc': 'Русскоязычное комьюнити',
+                // Footer
+                'footer.copyright': '© 2026 POS Games. Создано вручную Ромой Посейдоном 38. Все права защищены.',
+                'footer.tagline': 'Оставайтесь напуганными. 👁️'
+            },
+            en: {
+                'nav.games': 'Games',
+                'nav.about': 'About Me',
+                'nav.community': 'Community',
+                'nav.steam': 'Follow on Steam',
+                'hero.tagline': 'I craft psychological first-person horrors that warp your reality.',
+                'hero.intro': 'Hi, I am Roma Poseidon 38, a solo indie developer behind POS Games. I specialize in creating atmospheric adventures, mind-bending simulators, and deep psychological thrillers entirely by myself, pushing the boundaries of indie horror storytelling.',
+                'hero.followerLabel': 'Steam Followers',
+                'hero.followerJoin': 'Join my growing community on Steam!',
+                'hero.followerTagline': 'New nightmares are brewing 👁️',
+                'games.sectionTitle': 'My Games',
+                'games.sectionSubtitle': 'Each project is a descent into the unknown. Face your fears.',
+                'game1.tag1': 'Psychological Horror',
+                'game1.tag2': 'First-Person',
+                'game1.tag3': 'Story Rich',
+                'game1.desc': 'A first-person psychological horror game about the crushing weight of guilt. Live through the aftermath of a devastating tragedy: your wife is dead, and it\'s your fault. But when her casket is brought home, something inexplicable and terrifying begins to warp your reality...',
+                'game1.buyBtn': 'Buy on Steam',
+                'game1.available': 'Available Now',
+                'game2.tag1': 'Psychological Horror',
+                'game2.tag2': 'First-Person',
+                'game2.tag3': 'Experimental',
+                'game2.demoBadge': 'Free Demo',
+                'game2.desc': 'An experimental psychological horror experience consisting of 7 unique gameplay segments. For this special project, I collaborated with 6 other brilliant indie developers, each crafting an isolated nightmare segment to distort your senses.',
+                'game2.demoBtn': 'Play Free Demo',
+                'game2.steamBtn': 'View on Steam',
+                'game2.demoAvailable': 'Demo Available Now',
+                'about.title': 'Behind the',
+                'about.titleAccent': 'Games',
+                'about.col1Title': 'Everything Myself',
+                'about.col1Text': 'From programming to level design, from sound design to storytelling — every detail is crafted by my own hands.',
+                'about.col2Title': 'Atmosphere',
+                'about.col2Text': 'Every creak, every shadow, every quiet sound is carefully designed to create a deep, unsettling experience.',
+                'about.col3Title': 'Indie Spirit',
+                'about.col3Text': 'Each project is a piece of my soul manifested as an interactive nightmare. No compromises, just pure horror.',
+                'about.quote': '"I make games that stay with you long after the screen goes dark."',
+                'about.quoteAuthor': '— Roma Poseidon 38',
+                'community.title': 'Community',
+                'community.subtitle': 'Join the community of survivors, share your scariest moments, and get early access to demos.',
+                'community.steam': 'Steam',
+                'community.steamDesc': 'Follow for updates',
+                'community.twitter': 'Twitter / X',
+                'community.twitterDesc': 'Daily dev updates',
+                'community.discord': 'Discord',
+                'community.discordDesc': 'Chat with the dev',
+                'community.vk': 'VK',
+                'community.vkDesc': 'Russian community',
+                'footer.copyright': '© 2026 POS Games. Handcrafted by Roma Poseidon 38. All rights reserved.',
+                'footer.tagline': 'Stay scared. 👁️'
+            },
+            id: {
+                'nav.games': 'Game',
+                'nav.about': 'Tentang Saya',
+                'nav.community': 'Komunitas',
+                'nav.steam': 'Ikuti di Steam',
+                'hero.tagline': 'Saya menciptakan horor psikologis orang pertama yang membengkokkan realitas Anda.',
+                'hero.intro': 'Halo, saya Roma Poseidon 38, pengembang indie solo di balik POS Games. Saya mengkhususkan diri dalam menciptakan petualangan atmosferik, simulator yang membengkokkan pikiran, dan thriller psikologis mendalam sepenuhnya sendiri, mendorong batas-batas penceritaan horor indie.',
+                'hero.followerLabel': 'Pengikut Steam',
+                'hero.followerJoin': 'Bergabunglah dengan komunitas saya yang terus berkembang di Steam!',
+                'hero.followerTagline': 'Mimpi buruk baru sedang datang 👁️',
+                'games.sectionTitle': 'Game Saya',
+                'games.sectionSubtitle': 'Setiap proyek adalah turun ke tempat yang tak dikenal. Hadapi ketakutanmu.',
+                'game1.tag1': 'Horor Psikologis',
+                'game1.tag2': 'Orang Pertama',
+                'game1.tag3': 'Kaya Cerita',
+                'game1.desc': 'Game horor psikologis orang pertama tentang beban rasa bersalah yang menghancurkan. Jalani kehidupan setelah tragedi yang menghancurkan: istrimu telah tiada, dan itu salahmu. Namun ketika peti matinya dibawa pulang, sesuatu yang tak dapat dijelaskan dan menakutkan mulai membengkokkan realitasmu...',
+                'game1.buyBtn': 'Beli di Steam',
+                'game1.available': 'Tersedia Sekarang',
+                'game2.tag1': 'Horor Psikologis',
+                'game2.tag2': 'Orang Pertama',
+                'game2.tag3': 'Eksperimental',
+                'game2.demoBadge': 'Demo Gratis',
+                'game2.desc': 'Pengalaman horor psikologis eksperimental yang terdiri dari 7 segmen gameplay unik. Untuk proyek khusus ini, saya berkolaborasi dengan 6 pengembang indie brilian lainnya, masing-masing menciptakan segmen mimpi buruk terisolasi untuk mendistorsi indra Anda.',
+                'game2.demoBtn': 'Main Demo Gratis',
+                'game2.steamBtn': 'Lihat di Steam',
+                'game2.demoAvailable': 'Demo Tersedia Sekarang',
+                'about.title': 'Di Balik',
+                'about.titleAccent': 'Layar',
+                'about.col1Title': 'Semua Sendiri',
+                'about.col1Text': 'Dari pemrograman hingga desain level, dari desain suara hingga penceritaan — setiap detail dibuat oleh tangan saya sendiri.',
+                'about.col2Title': 'Atmosfer',
+                'about.col2Text': 'Setiap derit, setiap bayangan, setiap suara hening dirancang dengan hati-hati untuk menciptakan pengalaman yang mendalam dan meresahkan.',
+                'about.col3Title': 'Semangat Indie',
+                'about.col3Text': 'Setiap proyek adalah bagian dari jiwa saya yang diwujudkan sebagai mimpi buruk interaktif. Tanpa kompromi, hanya horor murni.',
+                'about.quote': '"Saya membuat game yang tetap bersamamu lama setelah layar menjadi gelap."',
+                'about.quoteAuthor': '— Roma Poseidon 38',
+                'community.title': 'Komunitas',
+                'community.subtitle': 'Bergabunglah dengan komunitas penyintas, bagikan momen paling menakutkanmu, dan dapatkan akses awal ke demo.',
+                'community.steam': 'Steam',
+                'community.steamDesc': 'Ikuti untuk update',
+                'community.twitter': 'Twitter / X',
+                'community.twitterDesc': 'Update dev harian',
+                'community.discord': 'Discord',
+                'community.discordDesc': 'Chat dengan developer',
+                'community.vk': 'VK',
+                'community.vkDesc': 'Komunitas Rusia',
+                'footer.copyright': '© 2026 POS Games. Dibuat dengan tangan oleh Roma Poseidon 38. Semua hak dilindungi.',
+                'footer.tagline': 'Tetap takut. 👁️'
+            }
+        };
 
-        function toggleMenu() {
+        // ========== LANGUAGE STATE ==========
+        let currentLang = 'ru';
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+
+            // Update document lang attribute
+            document.documentElement.lang = lang;
+
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Update language buttons (desktop)
+            document.querySelectorAll('.lang-btn[data-lang]').forEach(btn => {
+                const btnLang = btn.getAttribute('data-lang');
+                if (btnLang === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update language buttons (mobile)
+            document.querySelectorAll('.lang-btn[data-lang-mobile]').forEach(btn => {
+                const btnLang = btn.getAttribute('data-lang-mobile');
+                if (btnLang === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Save preference
+            try {
+                localStorage.setItem('posGamesLang', lang);
+            } catch (e) { /* ignore */ }
+        }
+
+        // ========== INITIALIZE ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check saved language
+            const savedLang = localStorage.getItem('posGamesLang');
+            if (savedLang && translations[savedLang]) {
+                setLanguage(savedLang);
+            } else {
+                setLanguage('ru');
+            }
+
+            // Desktop language buttons
+            document.querySelectorAll('.lang-btn[data-lang]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    setLanguage(lang);
+                    // Close mobile menu if open
+                    closeMobileMenu();
+                });
+            });
+
+            // Mobile language buttons
+            document.querySelectorAll('.lang-btn[data-lang-mobile]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang-mobile');
+                    setLanguage(lang);
+                    closeMobileMenu();
+                });
+            });
+
+            // Hamburger toggle
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            hamburgerBtn.addEventListener('click', () => {
+                toggleMobileMenu();
+            });
+
+            // Mobile nav links
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    closeMobileMenu();
+                });
+            });
+
+            // Close mobile menu on outside click
+            document.addEventListener('click', (e) => {
+                if (
+                    mobileMenu.classList.contains('open') &&
+                    !mobileMenu.contains(e.target) &&
+                    !hamburgerBtn.contains(e.target)
+                ) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Close mobile menu on resize to desktop
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && mobileMenu.classList.contains('open')) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Smooth scroll for anchor links with offset
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        e.preventDefault();
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset -
+                            navHeight - 15;
+                        window.scrollTo({ top: targetPos, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Image error fallbacks
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    this.style.opacity = '0.1';
+                    this.style.filter = 'grayscale(80%)';
+                });
+            });
+
+            console.log('👁️ POS Games — Рома Посейдон 38. Welcome to the nightmare.');
+        });
+
+        // ========== MOBILE MENU HELPERS ==========
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
             const isOpen = mobileMenu.classList.contains('open');
             if (isOpen) {
-                mobileMenu.classList.remove('open');
-                hamburgerBtn.classList.remove('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = 'auto';
+                closeMobileMenu();
             } else {
                 mobileMenu.classList.add('open');
                 hamburgerBtn.classList.add('active');
@@ -1134,93 +1362,14 @@
             }
         }
 
-        hamburgerBtn.addEventListener('click', toggleMenu);
-
-        // Close mobile menu when a link is clicked
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('open');
-                hamburgerBtn.classList.remove('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = 'auto';
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (
-                mobileMenu.classList.contains('open') &&
-                !mobileMenu.contains(e.target) &&
-                !hamburgerBtn.contains(e.target)
-            ) {
-                mobileMenu.classList.remove('open');
-                hamburgerBtn.classList.remove('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Close mobile menu on resize to desktop
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768 && mobileMenu.classList.contains('open')) {
-                mobileMenu.classList.remove('open');
-                hamburgerBtn.classList.remove('active');
-                hamburgerBtn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Smooth scroll for all anchor links with offset for fixed nav
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    e.preventDefault();
-                    const navHeight = document.querySelector('nav').offsetHeight;
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset -
-                        navHeight - 20;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Intersection Observer for scroll-triggered animations on game cards
-        const cards = document.querySelectorAll('.chunky-card');
-        const cardObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    cardObserver.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        cards.forEach(card => {
-            card.style.opacity = '0.85';
-            card.style.transform = 'translateY(15px)';
-            card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-            cardObserver.observe(card);
-        });
-
-        // Check if any images failed to load and apply a class
-        document.querySelectorAll('img').forEach(img => {
-            img.addEventListener('error', function() {
-                this.classList.add('img-fallback');
-                this.style.opacity = '0.15';
-                this.style.filter = 'grayscale(80%)';
-            });
-        });
-
-        console.log('👁️ POS Games — Welcome to the nightmare.');
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            mobileMenu.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = 'auto';
+        }
     </script>
 </body>
 </html>
