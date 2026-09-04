@@ -1,195 +1,1226 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS Games | Официальный сайт инди-разработчика</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POS Games — Psychological Horror Studio</title>
+
+    <!-- Google Fonts: Montserrat for headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+
     <style>
-        body {
-            background-color: #0d0d0d;
-            color: #e5e5e5;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* ===== CSS Variables ===== */
+        :root {
+            --bg-primary: #0d0d0e;
+            --bg-secondary: #141416;
+            --bg-card: #1a1a1d;
+            --bg-card-hover: #1f1f23;
+            --accent: #ff1a1a;
+            --accent-glow: rgba(255, 26, 26, 0.45);
+            --accent-dim: rgba(255, 26, 26, 0.18);
+            --accent-amber: #e8a13a;
+            --border-color: rgba(255, 26, 26, 0.22);
+            --border-thick: rgba(255, 26, 26, 0.4);
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0b5;
+            --text-muted: #6e6e75;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --card-radius: 14px;
+            --btn-radius: 10px;
+            --transition-smooth: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* ===== Reset & Base ===== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        header {
-            background-color: #141414;
-            border-bottom: 2px solid #8b0000;
-            padding: 20px;
-            text-align: center;
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        header h1 {
-            margin: 10px 0 5px 0;
-            color: #ff003c;
-            letter-spacing: 2px;
-            font-size: 2.5rem;
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
         }
 
-        header p {
-            margin: 0;
-            color: #888;
-            font-style: italic;
+        /* ===== Noise Overlay ===== */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+        /* ===== Vignette Effect ===== */
+        .vignette-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 30px;
+        /* ===== Typography ===== */
+        .font-heading {
+            font-family: var(--font-heading);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+
+        /* ===== Horror Neon Text Effect ===== */
+        .horror-neon {
+            color: var(--text-primary);
+            text-shadow:
+                0 0 20px var(--accent-glow),
+                0 0 60px rgba(255, 26, 26, 0.25),
+                0 0 100px rgba(255, 26, 26, 0.1);
+            transition: text-shadow var(--transition-smooth);
+        }
+
+        .horror-neon:hover {
+            text-shadow:
+                0 0 30px var(--accent-glow),
+                0 0 80px rgba(255, 26, 26, 0.35),
+                0 0 140px rgba(255, 26, 26, 0.2);
+        }
+
+        /* ===== Gradient Text ===== */
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 30%, #ff1a1a 70%, #8b0000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-red {
+            background: linear-gradient(135deg, #ff4444 0%, #ff1a1a 40%, #990000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== Navigation ===== */
+        .nav-blur {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(13, 13, 14, 0.85);
+            border-bottom: 1px solid var(--border-color);
+            transition: all var(--transition-smooth);
+        }
+
+        .nav-link {
+            position: relative;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            transition: color var(--transition-smooth), text-shadow var(--transition-smooth);
+            padding: 0.5rem 0.25rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            transition: width var(--transition-smooth);
+        }
+
+        .nav-link:hover {
             color: #fff;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
+            text-shadow: 0 0 18px var(--accent-glow);
         }
 
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 30px;
+        .nav-link:hover::after {
+            width: 100%;
         }
 
-        .game-card {
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
+        /* ===== Steam Button ===== */
+        .steam-btn {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--btn-radius);
+            background: var(--accent);
+            color: #fff;
+            border: 2px solid var(--accent);
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            position: relative;
             overflow: hidden;
-            transition: transform 0.3s, border-color 0.3s;
-            display: flex;
+            white-space: nowrap;
+        }
+
+        .steam-btn:hover {
+            background: #ff3333;
+            border-color: #ff3333;
+            box-shadow:
+                0 0 25px var(--accent-glow),
+                0 0 60px rgba(255, 26, 26, 0.25),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .steam-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        /* ===== Hamburger Menu ===== */
+        .hamburger {
+            display: none;
             flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            z-index: 100;
         }
 
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: #ff003c;
-            box-shadow: 0 5px 15px rgba(255, 0, 60, 0.2);
-        }
-
-        .game-image-steam {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-bottom: 2px solid #ff003c;
-            background: #222;
-        }
-
-        .game-info {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .game-info h3 {
-            margin: 0 0 10px 0;
-            color: #fff;
-            font-size: 1.5rem;
-        }
-
-        .game-info p {
-            color: #aaa;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
-            flex-grow: 1;
-        }
-
-        .game-price {
-            font-size: 1.1rem;
-            color: #ffef78;
-            font-weight: bold;
-            margin-top: auto;
-            margin-bottom: 15px;
-        }
-
-        .btn {
+        .hamburger span {
             display: block;
-            background-color: #ff003c;
-            color: #fff;
-            text-decoration: none;
-            padding: 12px 20px;
+            width: 26px;
+            height: 2.5px;
+            background: var(--text-primary);
             border-radius: 4px;
-            font-weight: bold;
-            transition: background 0.2s;
-            text-align: center;
-            box-sizing: border-box;
+            transition: all var(--transition-smooth);
+            transform-origin: center;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+            background: var(--accent);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+            background: var(--accent);
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100vh;
+            background: rgba(13, 13, 14, 0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 90;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
         }
 
-        .btn:hover {
-            background-color: #b3002a;
+        .mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
         }
 
-        footer {
-            background-color: #141414;
-            text-align: center;
-            padding: 30px;
-            margin-top: 60px;
-            border-top: 1px solid #222;
-        }
-
-        footer a {
-            color: #ff003c;
+        .mobile-menu a {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--text-primary);
             text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: all var(--transition-smooth);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* ===== Chunky Card Style ===== */
+        .chunky-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: var(--card-radius);
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.3);
+            transition: all var(--transition-smooth);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chunky-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--card-radius);
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(255, 26, 26, 0.03) 0%, transparent 40%);
+            z-index: 1;
+        }
+
+        .chunky-card:hover {
+            border-color: var(--border-thick);
+            background: var(--bg-card-hover);
+            box-shadow:
+                0 8px 40px rgba(0, 0, 0, 0.7),
+                0 0 35px var(--accent-dim),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.35);
+            transform: translateY(-6px);
+        }
+
+        /* ===== Game Card Specific ===== */
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .game-card .image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #111113;
+            border-bottom: 2px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .game-card .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block;
+            opacity: 0.85;
+        }
+
+        .game-card:hover .image-container img {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        .game-card .image-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(13, 13, 14, 0.9) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .game-card .content-area {
+            padding: 1.8rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== Tag Badges ===== */
+        .tag-badge {
+            display: inline-block;
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+            background: rgba(255, 26, 26, 0.12);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 26, 26, 0.25);
+            transition: all var(--transition-smooth);
+            white-space: nowrap;
+        }
+
+        .tag-badge:hover {
+            background: rgba(255, 26, 26, 0.22);
+            border-color: rgba(255, 26, 26, 0.45);
+            color: #ff9999;
+            box-shadow: 0 0 15px rgba(255, 26, 26, 0.2);
+        }
+
+        .tag-badge.amber {
+            background: rgba(232, 161, 58, 0.12);
+            color: #e8a13a;
+            border-color: rgba(232, 161, 58, 0.25);
+        }
+        .tag-badge.amber:hover {
+            background: rgba(232, 161, 58, 0.22);
+            border-color: rgba(232, 161, 58, 0.45);
+            color: #f0c060;
+            box-shadow: 0 0 15px rgba(232, 161, 58, 0.2);
+        }
+
+        /* ===== Price Badge ===== */
+        .price-badge {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-glow);
+            letter-spacing: 0.02em;
+        }
+
+        /* ===== Action Buttons ===== */
+        .btn-primary-red {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.85rem 2rem;
+            border-radius: var(--btn-radius);
+            background: var(--accent);
+            color: #fff;
+            border: 2px solid var(--accent);
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary-red:hover {
+            background: #ff3333;
+            border-color: #ff3333;
+            box-shadow:
+                0 0 30px var(--accent-glow),
+                0 0 70px rgba(255, 26, 26, 0.3),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+        .btn-primary-red:active {
+            transform: translateY(0);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .btn-outline-red {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.85rem 2rem;
+            border-radius: var(--btn-radius);
+            background: transparent;
+            color: #ff5555;
+            border: 2px solid rgba(255, 26, 26, 0.5);
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            white-space: nowrap;
+        }
+
+        .btn-outline-red:hover {
+            background: rgba(255, 26, 26, 0.1);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 22px rgba(255, 26, 26, 0.25);
+            transform: translateY(-3px);
+        }
+        .btn-outline-red:active {
+            transform: translateY(0);
+        }
+
+        /* ===== Hero Section ===== */
+        .hero-banner-container {
+            position: relative;
+            border-radius: var(--card-radius);
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+            background: #111113;
+            box-shadow:
+                0 8px 40px rgba(0, 0, 0, 0.6),
+                0 0 50px rgba(255, 26, 26, 0.08);
+            transition: all var(--transition-smooth);
+            aspect-ratio: 16 / 10;
+        }
+
+        .hero-banner-container:hover {
+            border-color: var(--border-thick);
+            box-shadow:
+                0 12px 50px rgba(0, 0, 0, 0.7),
+                0 0 60px rgba(255, 26, 26, 0.15);
+        }
+
+        .hero-banner-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.8;
+            transition: opacity 0.5s ease;
+        }
+        .hero-banner-container:hover img {
+            opacity: 1;
+        }
+
+        .hero-banner-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(13, 13, 14, 0.5) 0%, rgba(255, 26, 26, 0.06) 50%, rgba(13, 13, 14, 0.3) 100%);
+            pointer-events: none;
+        }
+
+        /* ===== Follower Count Block ===== */
+        .follower-block {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 1.2rem 1.8rem;
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            transition: all var(--transition-smooth);
+        }
+        .follower-block:hover {
+            border-color: var(--border-thick);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 26, 26, 0.12);
+        }
+
+        /* ===== Footer Social Icons ===== */
+        .social-icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all var(--transition-smooth);
+            cursor: pointer;
+        }
+        .social-icon-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-dim);
+            transform: translateY(-3px);
+            background: rgba(255, 26, 26, 0.08);
+        }
+
+        /* ===== Section Divider ===== */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--border-color) 25%, var(--border-thick) 50%, var(--border-color) 75%, transparent 100%);
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .desktop-nav-links {
+                display: none !important;
+            }
+            .desktop-steam-btn {
+                display: none !important;
+            }
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero-banner-container {
+                aspect-ratio: 16 / 11;
+            }
+
+            .game-card .content-area {
+                padding: 1.3rem 1.4rem 1.6rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* ===== Fade-in Animation ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            opacity: 0;
+        }
+        .delay-1 {
+            animation-delay: 0.15s;
+        }
+        .delay-2 {
+            animation-delay: 0.3s;
+        }
+        .delay-3 {
+            animation-delay: 0.45s;
+        }
+        .delay-4 {
+            animation-delay: 0.6s;
+        }
+
+        /* ===== Glow pulse for accents ===== */
+        @keyframes glowPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 20px var(--accent-dim);
+            }
+            50% {
+                box-shadow: 0 0 40px var(--accent-glow);
+            }
+        }
+        .glow-pulse {
+            animation: glowPulse 3s ease-in-out infinite;
         }
     </style>
 </head>
+
 <body>
+    <!-- Noise & Vignette Overlays -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="vignette-overlay" aria-hidden="true"></div>
 
-    <header>
-        <div class="logo-area">
-            <div style="width: 100px; height: 100px; background: radial-gradient(circle, #ff0000 0%, #000 70%); border-radius: 50%; margin: 0 auto; border: 3px solid #ff003c; box-shadow: 0 0 15px #ff003c;"></div>
-        </div>
-        <h1>POS GAMES</h1>
-        <p>Сайт инди-разработчика | Официальные проекты</p>
-    </header>
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav class="nav-blur fixed top-0 left-0 right-0 z-50 py-3 px-4 md:px-8 lg:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group flex-shrink-0">
+                <img
+                src="logo.png"
+                alt="POS Games Logo"
+                class="w-10 h-10 md:w-11 md:h-11 rounded-lg border-2 border-[var(--border-color)] object-cover transition-all duration-300 group-hover:border-[var(--accent)] group-hover:shadow-[0_0_20px_var(--accent-dim)]"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                />
+                <span class="font-heading font-900 text-lg md:text-xl tracking-tight horror-neon hidden" style="display:none; font-weight:900;">
+                    POS GAMES
+                </span>
+                <span class="font-heading text-lg md:text-xl tracking-tight horror-neon" style="font-weight:900;">
+                    POS GAMES
+                </span>
+            </a>
 
-    <div class="container">
-        <h2 class="section-title">Игры в Steam</h2>
-        
-        <div class="games-grid">
-            
-            <!-- ИГРА 1: Forgive Me My Love -->
-            <div class="game-card">
-                <!-- Прямая ссылка на официальный баннер игры из Стима -->
-                <img class="game-image-steam" src="https://steamstatic.com" alt="Forgive Me My Love">
-                <div class="game-info">
-                    <h3>Forgive Me My Love</h3>
-                    <p>Атмосферный психологический хоррор от первого лица. Исследуйте пугающе изменчивый дом, разгадайте тайну сокрушительного чувства вины и справьтесь с необъяснимыми событиями, от которых стынет кровь.</p>
-                    <div class="game-price">Доступно в Steam</div>
-                    <a href="https://steampowered.com" target="_blank" class="btn">Открыть в Steam</a>
-                </div>
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center gap-8 desktop-nav-links">
+                <a href="#games" class="nav-link">Games</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#community" class="nav-link">Community</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
 
-            <!-- ИГРА 2: 771 -->
-            <div class="game-card">
-                <!-- Ставим стильную временную хоррор-заглушку, пока игра полируется -->
-                <div style="height: 180px; background: linear-gradient(45deg, #2b0000, #050505); display:flex; align-items:center; justify-content:center; color:#ff003c; font-weight:bold; font-size: 2rem; border-bottom: 2px solid #ff003c; letter-spacing: 5px;">771</div>
-                <div class="game-info">
-                    <h3>771</h3>
-                    <p>Уникальный инди-хоррор и безумный эксперимент, созданный командой из 7 разработчиков. Каждый автор работал над проектом ровно по 1 дню, не зная планов предыдущего! Скачайте демо-версию прямо сейчас.</p>
-                    <div class="game-price">Запланировано: 14 сент. 2026 г.</div>
-                    <a href="https://steampowered.com" target="_blank" class="btn" style="background-color: #2b7711;">Скачать Demo / В список желаемого</a>
-                </div>
-            </div>
+            <!-- Desktop Steam Button -->
+            <a href="#" class="steam-btn desktop-steam-btn flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 inline-block mr-1.5 -ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M11.966 2.18a9.96 9.96 0 0 0-8.99 5.534h.005l4.914 2.043a1.59 1.59 0 0 1 1.635-.16l7.4-3.465a.17.17 0 0 1 .155.002l1.914 1.1A9.96 9.96 0 0 0 11.966 2.18zM2.972 8.12A9.97 9.97 0 0 0 2.01 12c0 5.523 4.477 10 10 10a9.96 9.96 0 0 0 6.605-2.392l-2.147-1.24a1.46 1.46 0 0 1-.358.203l-2.92-1.365a1.74 1.74 0 0 1-2.28-.928 1.74 1.74 0 0 1 .21-2.043l-2.12-.878A9.96 9.96 0 0 0 2.972 8.12zM9.46 10.597l3.32 1.374a1.66 1.66 0 0 0 .248.1l3.03-1.42-1.55-.896-4.55 1.11a.31.31 0 0 0-.3.24.3.3 0 0 0 .2.343zm.57 2.54a1.22 1.22 0 0 0 1.585-.576 1.22 1.22 0 0 0-2.16-1.152 1.22 1.22 0 0 0 .575 1.728zm8.26 1.67l2.68 1.546A9.96 9.96 0 0 0 22 12c0-1.34-.264-2.618-.743-3.79l-3.018 1.414a1.73 1.73 0 0 1 .05 5.183z"/>
+                </svg>
+                Follow on Steam
+            </a>
 
+            <!-- Hamburger -->
+            <button class="hamburger md:hidden" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#games" class="mobile-nav-link">Games</a>
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#community" class="mobile-nav-link">Community</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+        <a href="#" class="steam-btn mt-4" style="font-size:1rem; padding:1rem 2.5rem;">
+            Follow on Steam
+        </a>
     </div>
 
-    <footer>
-        <p>© 2026 POS Games. Все права защищены.</p>
-        <p>
-            <a href="https://youtube.com" target="_blank">YouTube Канал</a> | 
-            <a href="https://t.me" target="_blank">Telegram</a>
-        </p>
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="relative pt-28 md:pt-36 pb-16 md:pb-24 px-4 md:px-8 lg:px-12" id="hero">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14 items-center">
+                <!-- Left: Text Content -->
+                <div class="space-y-6 md:space-y-7 order-2 lg:order-1">
+                    <div class="animate-fade-in-up">
+                        <p class="inline-block font-heading font-600 text-xs md:text-sm tracking-[0.25em] uppercase text-[#ff4444] border-2 border-[var(--border-color)] rounded-full px-4 py-1.5 mb-5 bg-[rgba(255,26,26,0.06)]">
+                            ⚠ Indie Horror Studio
+                        </p>
+                    </div>
+
+                    <h1 class="animate-fade-in-up delay-1 font-heading font-900 text-5xl md:text-6xl lg:text-7xl leading-none tracking-tight">
+                        <span class="gradient-text">POS</span>
+                        <span class="gradient-text-red"> GAMES</span>
+                    </h1>
+
+                    <p class="animate-fade-in-up delay-2 font-heading font-600 text-xl md:text-2xl text-[#d0d0d5] leading-snug max-w-lg">
+                        We craft psychological first-person horrors that <span class="text-[#ff4444] font-700">warp your reality</span>.
+                    </p>
+
+                    <p class="animate-fade-in-up delay-3 text-[var(--text-secondary)] text-base md:text-lg leading-relaxed max-w-md font-light">
+                        Specializing in indie adventures, simulators, and mind-bending thrillers. Every project is an experiment in fear, atmosphere, and the fragile boundaries of the human psyche.
+                    </p>
+
+                    <div class="animate-fade-in-up delay-3 flex flex-wrap gap-4 pt-2">
+                        <a href="#games" class="btn-primary-red glow-pulse">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                            Explore Our Games
+                        </a>
+                        <a href="#about" class="btn-outline-red">
+                            About the Studio
+                        </a>
+                    </div>
+
+                    <!-- Follower Count Block -->
+                    <div class="animate-fade-in-up delay-4 follower-block mt-4 inline-flex items-center gap-4 flex-wrap">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-[rgba(255,26,26,0.15)] border-2 border-[var(--border-color)] flex items-center justify-center text-xl">
+                                👁️
+                            </div>
+                            <div>
+                                <p class="font-heading font-800 text-2xl leading-none text-white">12,847</p>
+                                <p class="text-xs text-[var(--text-muted)] font-medium tracking-wide">Steam Followers</p>
+                            </div>
+                        </div>
+                        <span class="w-px h-10 bg-[var(--border-color)]"></span>
+                        <div>
+                            <p class="font-heading font-700 text-sm text-[#ff6666]">Join our growing community!</p>
+                            <p class="text-xs text-[var(--text-muted)]">New horrors brewing 👁️</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Hero Banner -->
+                <div class="animate-fade-in-up delay-2 order-1 lg:order-2">
+                    <div class="hero-banner-container">
+                        <img
+                        src="hero_banner.png"
+                        alt="POS Games — Featured Horror Banner"
+                        class="w-full h-full object-cover"
+                        onerror="this.style.opacity='0.15'; this.style.filter='grayscale(80%)';"
+                        />
+                        <!-- Fallback overlay if image missing -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(255,26,26,0.1) 0%, rgba(13,13,14,0.7) 100%);">
+                            <span class="font-heading font-900 text-5xl md:text-7xl text-white/20 tracking-widest uppercase select-none">P O S</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider my-8 md:my-12"></div>
+
+    <!-- ==================== GAMES SHOWCASE ==================== -->
+    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-12" id="games">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="font-heading font-900 text-4xl md:text-5xl lg:text-6xl tracking-tight mb-4">
+                    <span class="gradient-text-red">OUR</span> <span class="text-white">GAMES</span>
+                </h2>
+                <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-2xl mx-auto font-light">
+                    Each title is a descent into the unknown. Face your fears.
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Games Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+                <!-- ===== GAME CARD 1: Forgive Me My Love ===== -->
+                <article class="chunky-card game-card animate-fade-in-up">
+                    <div class="image-container">
+                        <img
+                        src="game1_banner.png"
+                        alt="Forgive Me My Love — Banner"
+                        onerror="this.style.opacity='0.12'; this.style.filter='grayscale(85%)';"
+                        />
+                        <div class="absolute top-4 right-4 z-10">
+                            <span class="tag-badge" style="font-size:0.7rem; padding:0.45rem 1rem;">💰 $3.99</span>
+                        </div>
+                    </div>
+                    <div class="content-area">
+                        <div class="flex flex-wrap gap-2 mb-1">
+                            <span class="tag-badge">Psychological Horror</span>
+                            <span class="tag-badge">First-Person</span>
+                            <span class="tag-badge amber">Story Rich</span>
+                        </div>
+
+                        <h3 class="font-heading font-800 text-2xl md:text-3xl text-white leading-tight">
+                            Forgive Me My Love
+                        </h3>
+
+                        <p class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed font-light">
+                            A first-person psychological horror game about the crushing weight of guilt. Live through the aftermath of a devastating tragedy: your wife is dead, and it's your fault. But when her casket is brought home, something inexplicable and terrifying begins to warp your reality...
+                        </p>
+
+                        <div class="flex items-center justify-between mt-4 pt-2 border-t border-[var(--border-color)]">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></div>
+                                <span class="text-xs text-[var(--text-muted)] font-medium">Available Now</span>
+                            </div>
+                            <a href="#" class="btn-primary-red" style="padding:0.7rem 1.8rem; font-size:0.75rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M11.966 2.18a9.96 9.96 0 0 0-8.99 5.534h.005l4.914 2.043a1.59 1.59 0 0 1 1.635-.16l7.4-3.465a.17.17 0 0 1 .155.002l1.914 1.1A9.96 9.96 0 0 0 11.966 2.18zM2.972 8.12A9.97 9.97 0 0 0 2.01 12c0 5.523 4.477 10 10 10a9.96 9.96 0 0 0 6.605-2.392l-2.147-1.24a1.46 1.46 0 0 1-.358.203l-2.92-1.365a1.74 1.74 0 0 1-2.28-.928 1.74 1.74 0 0 1 .21-2.043l-2.12-.878A9.96 9.96 0 0 0 2.972 8.12zM9.46 10.597l3.32 1.374a1.66 1.66 0 0 0 .248.1l3.03-1.42-1.55-.896-4.55 1.11a.31.31 0 0 0-.3.24.3.3 0 0 0 .2.343zm.57 2.54a1.22 1.22 0 0 0 1.585-.576 1.22 1.22 0 0 0-2.16-1.152 1.22 1.22 0 0 0 .575 1.728zm8.26 1.67l2.68 1.546A9.96 9.96 0 0 0 22 12c0-1.34-.264-2.618-.743-3.79l-3.018 1.414a1.73 1.73 0 0 1 .05 5.183z"/>
+                                </svg>
+                                Buy on Steam
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ===== GAME CARD 2: 771 ===== -->
+                <article class="chunky-card game-card animate-fade-in-up delay-1">
+                    <div class="image-container">
+                        <img
+                        src="game2_banner.png"
+                        alt="771 — Banner"
+                        onerror="this.style.opacity='0.12'; this.style.filter='grayscale(85%)';"
+                        />
+                        <div class="absolute top-4 right-4 z-10">
+                            <span class="tag-badge amber" style="font-size:0.7rem; padding:0.45rem 1rem;">🎮 Free Demo</span>
+                        </div>
+                    </div>
+                    <div class="content-area">
+                        <div class="flex flex-wrap gap-2 mb-1">
+                            <span class="tag-badge">Psychological Horror</span>
+                            <span class="tag-badge">First-Person</span>
+                            <span class="tag-badge amber">Co-op Indie</span>
+                        </div>
+
+                        <h3 class="font-heading font-800 text-2xl md:text-3xl text-white leading-tight">
+                            771
+                        </h3>
+
+                        <p class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed font-light">
+                            An experimental psychological horror experience consisting of <span class="text-white font-medium">7 unique gameplay segments</span>, each carefully crafted by a different indie developer to distort your senses. No two playthroughs are ever the same.
+                        </p>
+
+                        <div class="flex items-center justify-between mt-4 pt-2 border-t border-[var(--border-color)] flex-wrap gap-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
+                                <span class="text-xs text-[var(--text-muted)] font-medium">Demo Available Now</span>
+                            </div>
+                            <div class="flex gap-3 flex-wrap">
+                                <a href="#" class="btn-primary-red" style="padding:0.7rem 1.5rem; font-size:0.75rem; background:#e8a13a; border-color:#e8a13a;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Play Free Demo
+                                </a>
+                                <a href="#" class="btn-outline-red" style="padding:0.7rem 1.5rem; font-size:0.75rem;">
+                                    View on Steam
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider my-8 md:my-12"></div>
+
+    <!-- ==================== ABOUT & COLLABORATIONS ==================== -->
+    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-12" id="about">
+        <div class="max-w-5xl mx-auto">
+            <div class="chunky-card p-8 md:p-12 lg:p-14" style="border-radius:18px;">
+                <div class="text-center mb-8 md:mb-10">
+                    <h2 class="font-heading font-900 text-3xl md:text-4xl lg:text-5xl tracking-tight mb-3">
+                        <span class="text-white">ABOUT</span> <span class="gradient-text-red">POS GAMES</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent mx-auto mt-5 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+                    <!-- Column 1 -->
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-[rgba(255,26,26,0.1)] border-2 border-[var(--border-color)] flex items-center justify-center text-2xl">
+                            🔮
+                        </div>
+                        <h3 class="font-heading font-700 text-lg md:text-xl text-white">Atmospheric Storytelling</h3>
+                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light">
+                            We build worlds soaked in dread. Every shadow, every silence, every creak of the floor is intentional. Our stories linger long after the screen goes dark.
+                        </p>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-[rgba(232,161,58,0.1)] border-2 border-[rgba(232,161,58,0.25)] flex items-center justify-center text-2xl">
+                            🧩
+                        </div>
+                        <h3 class="font-heading font-700 text-lg md:text-xl text-white">Unique Indie Mechanics</h3>
+                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light">
+                            From shifting realities to fragmented narratives, we experiment with mechanics that challenge how you perceive and interact with the game world.
+                        </p>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-[rgba(255,26,26,0.1)] border-2 border-[var(--border-color)] flex items-center justify-center text-2xl">
+                            🤝
+                        </div>
+                        <h3 class="font-heading font-700 text-lg md:text-xl text-white">Creative Collaboration</h3>
+                        <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light">
+                            We partner with fellow indie developers to push boundaries. Projects like <span class="text-white font-medium">"771"</span> showcase the power of collective horror — 7 developers, 7 segments, one nightmare.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Collaboration Highlight -->
+                <div class="mt-10 p-6 md:p-8 rounded-xl border-2 border-[var(--border-color)] bg-[rgba(255,26,26,0.04)]">
+                    <div class="flex items-start gap-4 flex-wrap">
+                        <span class="text-3xl flex-shrink-0">👁️</span>
+                        <div>
+                            <p class="font-heading font-700 text-base md:text-lg text-white mb-2">The "771" Project — A Collaborative Experiment</p>
+                            <p class="text-[var(--text-secondary)] text-sm leading-relaxed font-light">
+                                In 2025, POS Games united 7 indie developers from across the globe to create "771" — an experimental horror anthology where each developer designed one segment with complete creative freedom. The result is a disorienting, genre-defying experience that blurs the line between authorship and nightmare.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider my-8 md:my-12"></div>
+
+    <!-- ==================== COMMUNITY SECTION ==================== -->
+    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-12" id="community">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="font-heading font-900 text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
+                <span class="text-white">JOIN THE</span> <span class="gradient-text-red">COMMUNITY</span>
+            </h2>
+            <p class="text-[var(--text-secondary)] text-base md:text-lg max-w-2xl mx-auto font-light mb-10">
+                Connect with fellow survivors, share your scariest moments, get early access to demos, and help shape our next nightmare.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 md:gap-5">
+                <div class="chunky-card px-6 py-5 flex items-center gap-4" style="border-radius:12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#ff4444]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M11.966 2.18a9.96 9.96 0 0 0-8.99 5.534h.005l4.914 2.043a1.59 1.59 0 0 1 1.635-.16l7.4-3.465a.17.17 0 0 1 .155.002l1.914 1.1A9.96 9.96 0 0 0 11.966 2.18zM2.972 8.12A9.97 9.97 0 0 0 2.01 12c0 5.523 4.477 10 10 10a9.96 9.96 0 0 0 6.605-2.392l-2.147-1.24a1.46 1.46 0 0 1-.358.203l-2.92-1.365a1.74 1.74 0 0 1-2.28-.928 1.74 1.74 0 0 1 .21-2.043l-2.12-.878A9.96 9.96 0 0 0 2.972 8.12zM9.46 10.597l3.32 1.374a1.66 1.66 0 0 0 .248.1l3.03-1.42-1.55-.896-4.55 1.11a.31.31 0 0 0-.3.24.3.3 0 0 0 .2.343zm.57 2.54a1.22 1.22 0 0 0 1.585-.576 1.22 1.22 0 0 0-2.16-1.152 1.22 1.22 0 0 0 .575 1.728zm8.26 1.67l2.68 1.546A9.96 9.96 0 0 0 22 12c0-1.34-.264-2.618-.743-3.79l-3.018 1.414a1.73 1.73 0 0 1 .05 5.183z"/>
+                    </svg>
+                    <div class="text-left">
+                        <p class="font-heading font-700 text-white">Steam</p>
+                        <p class="text-xs text-[var(--text-muted)]">Follow us for updates</p>
+                    </div>
+                </div>
+
+                <div class="chunky-card px-6 py-5 flex items-center gap-4" style="border-radius:12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#ff4444]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                    <div class="text-left">
+                        <p class="font-heading font-700 text-white">Twitter / X</p>
+                        <p class="text-xs text-[var(--text-muted)]">Daily dev updates</p>
+                    </div>
+                </div>
+
+                <div class="chunky-card px-6 py-5 flex items-center gap-4" style="border-radius:12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#ff4444]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                    <div class="text-left">
+                        <p class="font-heading font-700 text-white">Discord</p>
+                        <p class="text-xs text-[var(--text-muted)]">Chat with devs &amp; fans</p>
+                    </div>
+                </div>
+
+                <div class="chunky-card px-6 py-5 flex items-center gap-4" style="border-radius:12px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#ff4444]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 14.5c-.29.4-.65.68-1.06.83-.41.15-.87.22-1.37.22h-3.5c-.5 0-.96-.07-1.37-.22a2.27 2.27 0 01-1.06-.83c-.28-.4-.42-.87-.42-1.39V8.94c0-.52.14-.98.42-1.39.28-.4.64-.68 1.06-.83.41-.15.87-.22 1.37-.22h3.5c.5 0 .96.07 1.37.22.41.15.78.43 1.06.83.28.41.42.87.42 1.39v6.17c0 .52-.14.99-.42 1.39zm-1.27-5.3l-2.31 1.44c-.41.26-.72.28-1.1.02l-2.31-1.45v3.78c0 .35.13.65.39.89.26.25.57.37.93.37h4.18c.36 0 .67-.12.93-.37.26-.24.39-.54.39-.89V11.2h-1.1z"/>
+                    </svg>
+                    <div class="text-left">
+                        <p class="font-heading font-700 text-white">VK</p>
+                        <p class="text-xs text-[var(--text-muted)]">Russian community hub</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider my-8 md:my-12"></div>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section class="py-12 md:py-20 px-4 md:px-8 lg:px-12" id="contact">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="font-heading font-900 text-3xl md:text-4xl tracking-tight mb-4">
+                <span class="text-white">CONTACT</span> <span class="gradient-text-red">US</span>
+            </h2>
+            <p class="text-[var(--text-secondary)] text-base md:text-lg font-light mb-8">
+                For press inquiries, collaboration proposals, or just to say hi — drop us a line.
+            </p>
+            <a href="mailto:contact@posgames.com" class="btn-primary-red inline-flex" style="font-size:0.9rem; padding:1rem 2.5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                contact@posgames.com
+            </a>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="border-t-2 border-[var(--border-color)] bg-[#0a0a0b] py-8 md:py-10 px-4 md:px-8 lg:px-12 mt-8" id="footer">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <!-- Logo & Branding -->
+            <div class="flex items-center gap-4">
+                <img
+                src="avatar.png"
+                alt="POS Games Developer Avatar"
+                class="w-12 h-12 rounded-full border-2 border-[var(--border-color)] object-cover transition-all duration-300 hover:border-[var(--accent)] hover:shadow-[0_0_20px_var(--accent-dim)]"
+                onerror="this.style.display='none';"
+                />
+                <div>
+                    <p class="font-heading font-800 text-base md:text-lg text-white">POS Games</p>
+                    <p class="text-xs text-[var(--text-muted)]">Independent Horror Game Studio</p>
+                </div>
+            </div>
+
+            <!-- Social Icons -->
+            <div class="flex gap-3 md:gap-4">
+                <a href="#" class="social-icon-btn" aria-label="Steam" title="Steam">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M11.966 2.18a9.96 9.96 0 0 0-8.99 5.534h.005l4.914 2.043a1.59 1.59 0 0 1 1.635-.16l7.4-3.465a.17.17 0 0 1 .155.002l1.914 1.1A9.96 9.96 0 0 0 11.966 2.18zM2.972 8.12A9.97 9.97 0 0 0 2.01 12c0 5.523 4.477 10 10 10a9.96 9.96 0 0 0 6.605-2.392l-2.147-1.24a1.46 1.46 0 0 1-.358.203l-2.92-1.365a1.74 1.74 0 0 1-2.28-.928 1.74 1.74 0 0 1 .21-2.043l-2.12-.878A9.96 9.96 0 0 0 2.972 8.12zM9.46 10.597l3.32 1.374a1.66 1.66 0 0 0 .248.1l3.03-1.42-1.55-.896-4.55 1.11a.31.31 0 0 0-.3.24.3.3 0 0 0 .2.343zm.57 2.54a1.22 1.22 0 0 0 1.585-.576 1.22 1.22 0 0 0-2.16-1.152 1.22 1.22 0 0 0 .575 1.728zm8.26 1.67l2.68 1.546A9.96 9.96 0 0 0 22 12c0-1.34-.264-2.618-.743-3.79l-3.018 1.414a1.73 1.73 0 0 1 .05 5.183z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon-btn" aria-label="Twitter / X" title="Twitter / X">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon-btn" aria-label="Discord" title="Discord">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon-btn" aria-label="VK" title="VK">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 14.5c-.29.4-.65.68-1.06.83-.41.15-.87.22-1.37.22h-3.5c-.5 0-.96-.07-1.37-.22a2.27 2.27 0 01-1.06-.83c-.28-.4-.42-.87-.42-1.39V8.94c0-.52.14-.98.42-1.39.28-.4.64-.68 1.06-.83.41-.15.87-.22 1.37-.22h3.5c.5 0 .96.07 1.37.22.41.15.78.43 1.06.83.28.41.42.87.42 1.39v6.17c0 .52-.14.99-.42 1.39zm-1.27-5.3l-2.31 1.44c-.41.26-.72.28-1.1.02l-2.31-1.45v3.78c0 .35.13.65.39.89.26.25.57.37.93.37h4.18c.36 0 .67-.12.93-.37.26-.24.39-.54.39-.89V11.2h-1.1z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Copyright -->
+            <div class="text-center md:text-right">
+                <p class="text-sm text-[var(--text-muted)] font-medium">&copy; 2026 POS Games. All rights reserved.</p>
+                <p class="text-xs text-[var(--text-muted)]/70 mt-1">Stay scared. 👁️</p>
+            </div>
+        </div>
     </footer>
 
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // Hamburger Menu Toggle
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function toggleMenu() {
+            const isOpen = mobileMenu.classList.contains('open');
+            if (isOpen) {
+                mobileMenu.classList.remove('open');
+                hamburgerBtn.classList.remove('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            } else {
+                mobileMenu.classList.add('open');
+                hamburgerBtn.classList.add('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        hamburgerBtn.addEventListener('click', toggleMenu);
+
+        // Close mobile menu when a link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                hamburgerBtn.classList.remove('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (
+                mobileMenu.classList.contains('open') &&
+                !mobileMenu.contains(e.target) &&
+                !hamburgerBtn.contains(e.target)
+            ) {
+                mobileMenu.classList.remove('open');
+                hamburgerBtn.classList.remove('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close mobile menu on resize to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open');
+                hamburgerBtn.classList.remove('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Smooth scroll for all anchor links with offset for fixed nav
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset -
+                        navHeight - 20;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll-triggered animations on game cards
+        const cards = document.querySelectorAll('.chunky-card');
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    cardObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        cards.forEach(card => {
+            card.style.opacity = '0.85';
+            card.style.transform = 'translateY(15px)';
+            card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+            cardObserver.observe(card);
+        });
+
+        // Check if any images failed to load and apply a class
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                this.classList.add('img-fallback');
+                this.style.opacity = '0.15';
+                this.style.filter = 'grayscale(80%)';
+            });
+        });
+
+        console.log('👁️ POS Games — Welcome to the nightmare.');
+    </script>
 </body>
 </html>
